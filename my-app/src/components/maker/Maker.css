@@ -112,7 +112,7 @@
 }
 
 .VNCreationMenuContent{
-  background-color: pink;
+  /* background-color: pink; */
   height: 86%;
   
 }
@@ -146,7 +146,45 @@
   position:absolute;
   bottom: 3%;
   background-color: green;
-  height: 80px;
-  width: 200px;
+  height: 10%;
+  width: 20%;
   right: 3%;
+}
+
+.GameInfoMenu {
+  max-width: 90%;
+  margin-left: 0%;
+  margin-top: 5%;
+}
+
+.GameInfoMenu .form-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.GameInfoMenu label {
+  flex: 0 0 150px; /* Fixed width for label */
+  text-align: right; /* Right-align the text */
+  margin-right: 15px;
+  font-weight: bold;
+}
+
+.GameInfoMenu select,
+.GameInfoMenu input,
+.GameInfoMenu textarea {
+  flex: 1; /* Input fields take remaining space */
+  padding: 8px;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.GameInfoMenu .radio-group {
+  display: flex;
+  gap: 15px;
+}
+
+.GameInfoMenu input[type="radio"] {
+  margin-right: 5px;
 }

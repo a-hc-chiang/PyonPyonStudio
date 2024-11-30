@@ -2,21 +2,33 @@ import React, { useState, useEffect } from 'react';
 import './Maker.css';
 import TopMenu from '../shared/TopMenu'
 import BottomMenu from './shared/BottomMenu';
+import CharacterMenu from './components/CharacterMenu';
+import BGMenu from './components/BGMenu';
+import GameInfoMenu from './components/GameInfoMenu';
 import { useNavigate } from 'react-router-dom';
 
 const VNCreationPage = () => {
   const navigate = useNavigate();
 
-  const fakeCharacter = []; // for testing
+  const fakeCharacter = [
+
+
+  ]; // for testing
   const fakeBackgrounds = []; // for testing
 
   
   const menus = ["Characters", "Story", "Background Assets"]
-  const [currMenuIdx, setCurrMenuIdx ] = useState(1);
+  const [currMenuIdx, setCurrMenuIdx ] = useState(0);
 
   // these get fed into the backend when generate is selected
   const [characters, setCharacters] = useState([]);
-  const [gameInfo, setGameInfo] = useState(null);
+  const [gameInfo, setGameInfo] = useState({
+    "setting": "",
+    "playTime": 30,
+    "numDecisions": 2,
+    "callFeature": false,
+    "additionalFeatures": ""
+  });
   const [backgrounds, setBackgrounds] = useState([]);
   const [currMenu, setCurrMenu] = useState(null);
   const [showNext, setShowNext] = useState(true);
@@ -29,7 +41,8 @@ const VNCreationPage = () => {
   const handleNextClick = () => {
     // go to next or submit depending on what currMenuIdx we are on, save the information here
     if (currMenuIdx == 2){
-      console.log("generate");
+      console.log("generate with: ");
+      console.log({"characters": characters, "backgrounds": backgrounds, "gameInfo": gameInfo})
       // do something with characters, backgrounds, gameInfo to API
     } else{
       setCurrMenuIdx((currMenuIdx+1) % 3);
@@ -73,8 +86,37 @@ const VNCreationPage = () => {
           <div className={"VNCreationTab"}><p className={"VNCreationTabText"}>Story</p></div>
           <div className={"VNCreationTab"}><p className={"VNCreationTabText"}>Background Assets</p></div>
         </div>
-        <div className={"VNCreationMenuContent"}>
-          
+        <div className="VNCreationMenuContent">
+          {(() => {
+            if (currMenuIdx === 0) {
+              return (
+                <CharacterMenu 
+                  showNext={showNext} 
+                  setShowNext={setShowNext} 
+                  characters={characters} 
+                  setCharacters={setCharacters} 
+                />
+              );
+            } else if (currMenuIdx === 1) {
+              return (
+                <GameInfoMenu 
+                  showNext={showNext} 
+                  setShowNext={setShowNext} 
+                  gameInfo={gameInfo} 
+                  setGameInfo={setGameInfo} 
+                />
+              );
+            } else if (currMenuIdx === 2) {
+              return (
+                <BGMenu 
+                  showNext={showNext} 
+                  setShowNext={setShowNext} 
+                  bgs={backgrounds} 
+                  setBackgrounds={setBackgrounds} 
+                />
+              );
+            }
+          })()}
         </div>
         {
           showNext ?

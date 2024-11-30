@@ -14,11 +14,28 @@ const VNCreationPage = () => {
 
 
   ]; // for testing
-  const fakeBackgrounds = []; // for testing
+  const fakeBackgrounds = [
+    {
+      url: "/backgrounds/test1.jpg",
+      prompt: "damn"
+    },
+    {
+      url: "/backgrounds/test2.jpg",
+      prompt: "life"
+    },
+    {
+      url: "/backgrounds/test3.jpg",
+      prompt: "is"
+    },
+    {
+      url: "/backgrounds/test4.jpg",
+      prompt: "pog"
+    },
+  ]; // for testing
 
   
   const menus = ["Characters", "Story", "Background Assets"]
-  const [currMenuIdx, setCurrMenuIdx ] = useState(0);
+  const [currMenuIdx, setCurrMenuIdx ] = useState(2);
 
   // these get fed into the backend when generate is selected
   const [characters, setCharacters] = useState([]);
@@ -29,7 +46,7 @@ const VNCreationPage = () => {
     "callFeature": false,
     "additionalFeatures": ""
   });
-  const [backgrounds, setBackgrounds] = useState([]);
+  const [backgrounds, setBackgrounds] = useState(fakeBackgrounds);
   const [currMenu, setCurrMenu] = useState(null);
   const [showNext, setShowNext] = useState(true);
   
@@ -111,7 +128,7 @@ const VNCreationPage = () => {
                 <BGMenu 
                   showNext={showNext} 
                   setShowNext={setShowNext} 
-                  bgs={backgrounds} 
+                  backgrounds={backgrounds} 
                   setBackgrounds={setBackgrounds} 
                 />
               );

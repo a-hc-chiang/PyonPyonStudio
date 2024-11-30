@@ -1,6 +1,60 @@
 import React, { useState, useEffect } from 'react';
 
-const BGMenu = ({ showNext, setShowNext, backgrounds, setBackground }) => {
+const BGMenu = ({ showNext, setShowNext, backgrounds, setBackgrounds }) => {
+  const [isHighlighted, setIsHighlighted] = useState(null);
+  const [highlightedPrompt, setHighlightedPrompt] = useState("");
+  const [highlightedURL, setHighlightedURL] = useState("");
+  const [hoveredIndex, setHoveredIndex] = useState(null);
+
+  useEffect(() => {
+    if (isHighlighted) {
+      
+    } else {
+
+    }
+
+  }, [isHighlighted]);
+
+  const changeToHighlighted = (index) => {
+    setShowNext(false);
+    setIsHighlighted(true);
+    setHighlightedPrompt(backgrounds[index].prompt);
+    setHighlightedURL(backgrounds[index].url);
+  };
+
+  const changeToAddNew = () => {
+    setShowNext(false);
+    setIsHighlighted(true);
+  };
+
+
+  const changeToMain = () => {
+    setIsHighlighted(false);
+    setHighlightedPrompt("");
+    setHighlightedURL("");
+  };
+
+  const handleMouseEnter = (index) => {
+    setHoveredIndex(index);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredIndex(null);
+  };
+
+  const handleDelete = (index) => {
+    const updatedBackgrounds = backgrounds.filter((_, i) => i !== index);
+    setBackgrounds(updatedBackgrounds);
+  };
+
+  const generateImage = () => {
+
+  };
+
+  const saveImage = () => {
+
+  }
+
   const handleAddBackground = () => {
     // const newCharacter = prompt("Enter the name of the new character:");
     // if (newCharacter) {
@@ -8,33 +62,77 @@ const BGMenu = ({ showNext, setShowNext, backgrounds, setBackground }) => {
     // }
   };
 
+  useEffect(() => {
+    console.log(backgrounds);
+  }, []);
+
 
   return (
     <div className="BackgroundMenu">
-      <h2>BackgroundMenu</h2>
+      {
+        isHighlighted ?
+        (<div className="backButton" onClick = {changeToMain}>
+            
+        </div>)
+        : null
+        
+      }
+      {isHighlighted ?
+      (
+        <div className="image-generator-menu">
+          <div className="image-container">
+            {highlightedURL ? (
+              <img src={highlightedURL} alt="Generated" className="generated-image" />
+            ) : (
+              <p>No image generated yet.</p>
+            )}
+          </div>
+
+          <div className="input-container">
+            <textarea
+              value={highlightedPrompt}
+              onChange={(e) => setHighlightedPrompt(e.target.value)}
+              placeholder="Enter your prompt here..."
+            />
+            <div className="button-container">
+              <button onClick={generateImage}>Generate Image</button>
+              <button onClick={saveImage}>Save Image</button>
+            </div>
+          </div>
+        </div>
+      ) :
+      (
+        <div className="grid-container">
+          {backgrounds.map((bg, index) => (
+            <div
+              key={index}
+              className="background-item"
+              onMouseEnter={() => handleMouseEnter(index)}
+              onMouseLeave={handleMouseLeave}
+              style={{ backgroundImage: `url(${bg.url})` }}
+              onClick={() => changeToHighlighted(index)}
+            >
+              {hoveredIndex === index && (
+                <div className="delete-icon" onClick={() => handleDelete(index)}>
+                  ✖
+                </div>
+              )}
+            </div>
+          ))}
+          <div ></div>
+        </div>
+      )
+      }
+
+      {
+        !isHighlighted ?
+        (<div className="newButton" onClick = {changeToAddNew}>
+            
+        </div>)
+        : null
+        
+      }
       
-      {/* <div>
-        <h3>Character List:</h3>
-        <ul>
-          {characters.length > 0 ? (
-            characters.map((character, index) => (
-              <li key={index}>{character}</li>
-            ))
-          ) : (
-            <p>No characters added yet!</p>
-          )}
-        </ul>
-      </div>
-      
-      <div>
-        <button onClick={handleAddCharacter}>Add Character</button>
-      </div>
-      
-      <div>
-        <button onClick={handleToggleShowNext}>
-          {showNext ? "Hide Next" : "Show Next"}
-        </button>
-      </div> */}
     </div>
   );
 };

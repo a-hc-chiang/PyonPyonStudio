@@ -1,5 +1,5 @@
 .App, body {
-  text-align: center;
+
   height: 100vh;
   width: 100vw;
   overflow: hidden;
@@ -8,6 +8,10 @@
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+
+p{
+  margin:0;
 }
 
 @media (prefers-reduced-motion: no-preference) {

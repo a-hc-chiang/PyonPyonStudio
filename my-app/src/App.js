@@ -1,12 +1,23 @@
 import logo from './logo.svg';
 import './App.css';
+import {
+  BrowserRouter,
+  Routes, // instead of "Switch"
+  Route,
+} from "react-router-dom";
 import LandingPage from './components/maker/LandingPage';
+import VNCreationPage from './components/maker/VNCreationPage';
+
 
 function App() {
   return (
-    <div className="App">
-      <LandingPage></LandingPage>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/generate-vn" element={<VNCreationPage/>} />
+        {/* Add more routes as needed */}
+      </Routes>
+    </BrowserRouter>
   );
 }
 

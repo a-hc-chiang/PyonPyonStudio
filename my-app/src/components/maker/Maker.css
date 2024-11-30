@@ -1,14 +1,152 @@
 .MakerPage{
   height: 100%;
+  margin: 0px;
 }
 
 .topMenu{
   color: 'white';
   font-size:  '18px';
-  text-align: 'center';
+  position: absolute;
   height: 6%;
-  width: 92%;
+  width: 96%;
   border-radius: 30px;
-  margin-top: 2%;
+  top: 2%;
+  left: 2%;
+}
+
+.botMenu{
+  background-color: #DF79CE;
+  font-size:  '18px';
+  position: absolute;
+  height: 6%;
+  width: 96%;
+  border-radius: 30px;
+  bottom: 2%;
+  left:2%;
+  display: flex; /* Enable flexbox */
+  /* justify-content: center; Horizontal alignment */
+  align-items: center; /* Vertical alignment */
+}
+
+.botMenuText {
+  height: auto; /* No need for a fixed height */
+  width: auto; /* Adjust width dynamically */
+  text-align: center;
+  padding: 5px; /* Optional for better spacing */
   margin-left: 4%;
+}
+
+.LPContent{
+  background-color: #F3CEED;
+  width: 80%;
+  height: 70%;
+  position: absolute;
+  border-radius: 10px;
+  top: 15%;
+  left: 10%;
+  display: grid;
+  grid-template-columns: 15% 40% 35% 10%; /* Defines the proportional layout */
+  align-items: center; /* Aligns items vertically */
+}
+
+.VNCreationMenu{
+  background-color: #F3CEED;
+  width: 90%;
+  height: 76%;
+  position: absolute;
+  border-radius: 10px;
+  top: 12%;
+  left: 5%;
+}
+
+
+
+.LPLogoContent {
+  background-color: yellow; /* Optional for visibility */
+  text-align: center;
+  width:90%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border-color: black;
+  border-width: 2;
+  border-style: dotted;
+  align-items: center; /* Aligns items vertically */
+}
+
+.LPMenuContent {
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center; /* Center buttons vertically */
+  text-align: left;
+}
+
+.LPGenerateVNButton {
+  background-color: #79dfce; /* Button background color */
+  padding: 10px 20px; /* Button size */
+  margin: 5px 0; /* Space between buttons */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor */
+  text-align: left;
+  height: 100px;
+}
+
+.LPPlayGameButton {
+  background-color: #79dfce; /* Button background color */
+  padding: 10px 20px; /* Button size */
+  margin: 5px 0; /* Space between buttons */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor */
+  text-align: left;
+  width: 40%;
+}
+
+
+.VNCreationTopBar {
+  background-color: #79dfce; /* Button background color */
+  height: 10%;
+  border-radius: 10px;
+  margin: 1%;
+  display: grid;
+  grid-template-columns: 33.3% 33.3% 33.3%;
+  align-items: center; /* Aligns items vertically */
+}
+
+.VNCreationMenuContent{
+  background-color: pink;
+  height: 86%;
+  
+}
+
+.VNCreationTab{
+  align-items: center;
+  text-align: center;
+  width: 80%;
+  background-color: #F3CEED;;
+  margin-left: 10%;
+  height: 60%;
+  border-radius: 30px;
+}
+
+.VNCreationTabSelected {
+  align-items: center;
+  text-align: center;
+  height: 80%;
+  margin-top: 4%;
+  width: 80%;
+  margin-left: 10%;
+  background-color: #F3CEED;
+  border-radius: 30px;
+}
+
+.VNCreationTabText{
+  margin-top: 3%;
+}
+
+.VNCreationNext{
+  position:absolute;
+  bottom: 3%;
+  background-color: green;
+  height: 80px;
+  width: 200px;
+  right: 3%;
 }

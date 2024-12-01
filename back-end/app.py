@@ -1,11 +1,24 @@
 from pymongo import MongoClient
 from dotenv import main
 import os
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 import json
 from dotenv import load_dotenv
 import openai
+import re
 
+import base64
+import urllib.request
+import time
+from datetime import datetime
+from flask_cors import CORS
+
+
+
+
+character_list = []
+background_list = []
+game_info = {}
 # Load environment variables
 load_dotenv()
 
@@ -14,6 +27,7 @@ openai.api_key = os.getenv('OPENAI_API_KEY')
 
 # Initialize Flask app
 app = Flask(__name__)
+CORS(app)
 
 # Connect to MongoDB
 main.load_dotenv()
@@ -27,6 +41,7 @@ db = client[db_name]
 # Collections
 backgrounds_collection = db["Backgrounds"]
 character_collection = db["Characters"]
+game_collection = db["Games"]
 game_info_collection = db["VNInformation"]
 game_status_collection = db["GameStatuses"]
 
@@ -57,8 +72,6 @@ def to_openAI_API(character_list, background_list, game_info):
 
 # New function to interact with OpenAI and generate the JSONs
 def openai_call(character_list, background_list, game_info):
-    print("yuck")
-    print(character_list, background_list, game_info)
     try:
         # Call OpenAI API to generate the response
         response = openai.chat.completions.create(
@@ -254,12 +267,21 @@ def openai_call(character_list, background_list, game_info):
         # print(response)
         # Extract the content from the API response
         ai_response = response.choices[0].message.content
-        print(ai_response)
+        # print(ai_response)
+        # Find the positions of the first and last curly braces
+        start_idx = ai_response.find("{")
+        end_idx = ai_response.rfind("}")
+
+        # Extract the JSON string between the first and last curly braces
+        json_string = ai_response[start_idx:end_idx + 1]
+
+    
+        ai_json = json.loads(json_string)
         
-        # Parse the AI-generated JSON
-        ai_json = json.loads(ai_response)
-        game_status_json = ai_json.get("GameStatus")
-        game_json = ai_json.get("Game")
+        print(ai_json)
+        # game_status_json = ai_json.get("GameStatus")
+        game_status_json = {}
+        game_json = ai_json
 
         # Return the generated JSON objects
         return game_status_json, game_json
@@ -267,6 +289,137 @@ def openai_call(character_list, background_list, game_info):
     except Exception as e:
         print(f"Error during API call: {e}")
         return {"error": str(e)}, {"error": str(e)}
+    
+
+
+def timestamp():
+    return datetime.fromtimestamp(time.time()).strftime("%Y%m%d-%H%M%S")
+
+
+def encode_file_to_base64(path):
+    with open(path, 'rb') as file:
+        return base64.b64encode(file.read()).decode('utf-8')
+
+
+def decode_and_save_base64(base64_str, save_path):
+    with open(save_path, "wb") as file:
+        file.write(base64.b64decode(base64_str))
+
+
+def call_api(api_endpoint, webui_server_url, **payload):
+    data = json.dumps(payload).encode('utf-8')
+    request = urllib.request.Request(
+        f'{webui_server_url}/{api_endpoint}',
+        headers={'Content-Type': 'application/json'},
+        data=data,
+    )
+    response = urllib.request.urlopen(request)
+    return json.loads(response.read().decode('utf-8'))
+
+
+def call_txt2img_api(webui_server_url, out_dir_t2i, **payload):
+    response = call_api('sdapi/v1/txt2img', webui_server_url, **payload)
+    save_paths = []
+    for index, image in enumerate(response.get('images')):
+        save_path = os.path.join(out_dir_t2i, f'txt2img-{timestamp()}-{index}.png')
+        save_paths.append(save_path)
+        decode_and_save_base64(image, save_path)
+    return save_path
+
+
+def make_image_from_prompt(prompt):
+    webui_server_url = os.getenv('SD_URL')
+    out_dir = 'final_images'
+    out_dir_i2i = out_dir
+    os.makedirs(out_dir_i2i, exist_ok=True)
+    batch_size = 1
+    
+    brainrot = "(skibidi:0.1), (gyatt:0.1), (rizz:0.1)"
+
+    payload = {
+            "prompt": "anime, masterpiece, landscape, background," + brainrot + "," + prompt,  # extra networks also in prompts
+            "negative_prompt": "lowres, text, error, cropped, worst quality, low quality, jpeg artifacts, ugly, duplicate, morbid, mutilated, out of frame, extra fingers, mutated hands, poorly drawn hands, poorly drawn face, mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra limbs, cloned face, disfigured, gross proportions, malformed limbs, missing arms, missing legs, extra arms, extra legs, fused fingers, too many fingers, long neck, username, watermark, signature",
+            "steps": 10,
+            "width": 820,
+            "height": 512,
+            "cfg_scale": 5,
+            "sampler_name": "DPM++ 2M",
+            "n_iter": 1,
+            "batch_size": 1,
+    }
+
+
+    save_paths = call_txt2img_api(webui_server_url, out_dir_i2i, **payload)
+    return (save_paths)
+
+
+@app.route('/generate-image', methods=['POST'])
+def generate_image():
+    try:
+        # Get the prompt from the request JSON
+        data = request.get_json()
+        prompt = data.get('prompt', None)
+
+        if not prompt:
+            return jsonify({'error': 'No prompt provided'}), 400
+
+        # Generate the image using the given prompt
+        image_path = make_image_from_prompt(prompt)
+        print('./' + image_path)
+
+        # if not image_path:
+        #     return jsonify({'error': 'Image generation failed'}), 500
+
+        # Send the generated image back to the client
+        return send_file('./' + image_path, mimetype='image/png')
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+
+@app.route('/create-character', methods=['GET'])
+def add_character(): 
+    jsonRequest = request.json
+    character_list.append(jsonRequest)
+    result = character_collection.insert_one(jsonRequest)
+    return jsonify({"inserted_id": str(result.inserted_id)})
+
+#adding bg entry 
+@app.route('/add-background', methods=['GET'])
+def add_background(): 
+    jsonRequest = request.json
+    background_list.append(jsonRequest)
+    result = backgrounds_collection.insert_one(jsonRequest)
+    return jsonify({"inserted_id": str(result.inserted_id)})
+
+#adding game entry
+@app.route('/create-game', methods=['GET'])
+def add_game_entry(): 
+    jsonRequest = request.get_json()
+    game_info = jsonRequest
+    result = game_info_collection.insert_one(jsonRequest)
+    return jsonify({"inserted_id": str(result.inserted_id)})
+
+
+# API endpoint to generate the game status and game JSONs
+@app.route('/generate-game-json-from-scratch', methods=['POST'])
+def generate_image_from_scratch():
+    try:
+        # Get the prompt from the request JSON
+        data = request.get_json()
+        game_info = data["game_info"]
+        background_list = data["backgrounds"]
+        character_list = data["characters"]
+
+        game_status_json, game_json = openai_call(character_list, background_list, game_info)
+    
+        return game_json
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
 
 
 # API endpoint to generate the game status and game JSONs

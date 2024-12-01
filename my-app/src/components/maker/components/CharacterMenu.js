@@ -136,6 +136,7 @@ const CharacterMenu = ({ showNext, setShowNext, characters, setCharacters }) => 
                
                 />
               </div>
+              <div className="outerAlignment">
               {
                 isSpriteScreen ? 
                 (
@@ -269,6 +270,7 @@ const CharacterMenu = ({ showNext, setShowNext, characters, setCharacters }) => 
 
                 )
               }
+            </div>
               
             </div>
             <button className="save-button" onClick={handleSaveChanges}>
@@ -309,9 +311,9 @@ const CharacterMenu = ({ showNext, setShowNext, characters, setCharacters }) => 
           <div
             key={"new"}
             className="background-item"
-            style={{ backgroundColor: "#DF79CE", fontSize:50, textAlign: 'center'}}
+            style={{ backgroundColor: "#DF79CE", fontSize:100, textAlign: 'center'}}
             onClick={handleAddCharacter}
-          ><p style={{marginTop: "-15px"}}>+</p></div>
+          ><p style={{}}>+</p></div>
         </div>
       )}
     </div>

@@ -6,7 +6,7 @@ const BottomMenu = ({}) => {
   return (
     <div className={"botMenu"}>
       <div className={"botMenuText"}>
-        <p style={{color: "white", fontSize: 30, marginTop: "-8px"}} className={"darumadrop-one-regular"}>App Name</p>
+        <p style={{color: "white", fontSize: 30, marginTop: "-8px"}} className={"darumadrop-one-regular"}>PyonPyon Studio</p>
       </div>
     </div>
   );

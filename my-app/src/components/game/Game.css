@@ -1,21 +1,111 @@
 .background-music {
-    background-color: rgba(2, 98, 17, 0.83);
+    background-color: #074A11;
+    opacity: 0.83;
     color: #FFFFFF;
-    font-size: 18px;
     font-family: 'Cormorant Garamond', serif;
     position: absolute;
     height: 6%;
     width: 25%;
-    border-radius: 30px;
-    top: 15%;
-    left: 73%;
-    padding-top: 5px;
-    padding-left: 15px;
+    border-radius: 5px;
+    top: 12%;
+    left: 76%;
+    padding: 5px 15px 15px ;
     box-sizing: border-box;
+    font-size: 3vh;
 }
 
 .cormorant-garamond-regular {
     font-family: "Cormorant Garamond", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.background-image {
+    background-size: cover;
+    height: 100vh;
+    width: 100%;
+    z-index: 1;
+}
+
+.game-over {
+
+}
+
+.dialogue-character-name {
+    background-color: #074A11;
+    opacity: 0.83;
+    color: #FFFFFF;
+    position: absolute;
+    height: 6%;
+    width: 28%;
+    top: 73%;
+    left: 20%;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-family: "Darumadrop One", sans-serif;
+    font-size: 4vh;
+    padding-left: 1%;
+}
+
+.darumadrop-one-regular {
+    font-family: "Darumadrop One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.dialogue-content {
+    background-color: #CEF3D6;
+    opacity: 0.84;
+    cursor: pointer;
+    position: absolute;
+    height: 17vh;
+    width: 71%;
+    top: 79%;
+    left: 20%;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-family: "Comic Neue", cursive;
+    font-size: 3vh;
+    padding: 15px;
+}
+
+.comic-neue-regular {
+    font-family: "Comic Neue", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.textbox-sprite {
+    position: absolute;
+    height: 50vh;
+    left: 1%;
+    top: 50% ;
+}
+
+.regular-sprite {
+    position: absolute;
+    height: 100vh;
+}
+
+.choice-container {
+    background-color: #B34DADD6;
+    padding: 5px 15px;
+    border-radius: 10px;
+    text-align: center;
+    width: 60vh;
+    height: 10vh;
+    cursor: pointer;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    color: #FFFFFF;
+    font-family: "Delius Swash Caps", sans-serif;
+    font-size: 4vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.delius-swash-caps-regular {
+    font-family: "Delius Swash Caps", cursive;
     font-weight: 400;
     font-style: normal;
 }

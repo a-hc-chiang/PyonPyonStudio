@@ -90,11 +90,11 @@ const VNCreationPage = () => {
     // go to next or submit depending on what currMenuIdx we are on, save the information here
     if (currMenuIdx == 2){
       console.log("generate with: ");
-      console.log({"characters": characters, "backgrounds": backgrounds, "gameInfo": gameInfo})
+      console.log({"characters": characters, "backgrounds": backgrounds, "game_info": gameInfo})
       const requestData = {
         characters: characters,
         backgrounds: backgrounds,
-        gameInfo: gameInfo,
+        game_info: gameInfo,
       };
       try {
         // Make a POST request to the /generate-game-json-from-scratch endpoint

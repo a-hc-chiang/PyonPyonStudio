@@ -1,11 +1,11 @@
 from pymongo import MongoClient
 from dotenv import main
 import os
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 import json
 from dotenv import load_dotenv
 import openai
-
+import re
 
 import base64
 import urllib.request
@@ -72,8 +72,6 @@ def to_openAI_API(character_list, background_list, game_info):
 
 # New function to interact with OpenAI and generate the JSONs
 def openai_call(character_list, background_list, game_info):
-    print("yuck")
-    print(character_list, background_list, game_info)
     try:
         # Call OpenAI API to generate the response
         response = openai.chat.completions.create(
@@ -269,12 +267,21 @@ def openai_call(character_list, background_list, game_info):
         # print(response)
         # Extract the content from the API response
         ai_response = response.choices[0].message.content
-        print(ai_response)
+        # print(ai_response)
+        # Find the positions of the first and last curly braces
+        start_idx = ai_response.find("{")
+        end_idx = ai_response.rfind("}")
+
+        # Extract the JSON string between the first and last curly braces
+        json_string = ai_response[start_idx:end_idx + 1]
+
+    
+        ai_json = json.loads(json_string)
         
-        # Parse the AI-generated JSON
-        ai_json = json.loads(ai_response)
-        game_status_json = ai_json.get("GameStatus")
-        game_json = ai_json.get("Game")
+        print(ai_json)
+        # game_status_json = ai_json.get("GameStatus")
+        game_status_json = {}
+        game_json = ai_json
 
         # Return the generated JSON objects
         return game_status_json, game_json
@@ -401,22 +408,13 @@ def generate_image_from_scratch():
     try:
         # Get the prompt from the request JSON
         data = request.get_json()
-        game_info = data.game_info
-        background_list = data.backgrounds
-        character_list = data.characters
+        game_info = data["game_info"]
+        background_list = data["backgrounds"]
+        character_list = data["characters"]
 
         game_status_json, game_json = openai_call(character_list, background_list, game_info)
-        if "error" in game_status_json or "error" in game_json:
-            return jsonify({"error": "Failed to generate JSONs"}), 500
-
-        # Insert the generated JSON into MongoDB
-        game_status_collection.insert_one(game_status_json)
-        game_collection.insert_one(game_json)
-
-        return jsonify({
-            "game_status": game_status_json,
-            "game": game_json
-        })
+    
+        return game_json
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500

@@ -242,7 +242,8 @@
   font-size: 14px;
   width: 70%;
   box-sizing: border-box;
-  box-shadow: 5px 5px 5px #121212;
+  box-shadow: 5px 5px 5px #5f5f5f;
+  font-family: 'Merriweather Sans', sans-serif;
 }
 
 .GameInfoMenu .more{
@@ -352,9 +353,11 @@
 }
 
 .BackgroundMenu .generated-image {
-  max-width: 100%;
-  max-height: 100%;
+  max-width: 110%;
+  max-height: 110%;
   object-fit: contain;
+  transform: translate3d(-3.5%, 5%, 0);
+  border-radius: 3%;
 }
 
 .BackgroundMenu .input-container {
@@ -367,28 +370,32 @@
 }
 
 .BackgroundMenu textarea {
-  width: 100%;
-  height: 100%;
+  width: 110%;
+  height: 130%;
   padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  font-size: x-large;
+  border: 1px solid black;
+  border-radius: 3%;
   resize: none;
+  transform: translate3d(0, 10%, 0);
+  font-family: 'Merriweather Sans', sans-serif;
 }
 
 .BackgroundMenu .button-container {
-  margin-top: 10px;
+  transform: translate3d(0, 60%, 0);
   
 }
 
 .BackgroundMenu button {
-  padding: 10px 20px;
-  font-size: 16px;
+  padding: 15px 20px;
+  transform: translate3d(20%, 50%, 0);
+  font-size: larger;
   cursor: pointer;
-  border: 1px solid #007bff;
-  background-color: #007bff;
+  border: 1px solid #000000;
+  background-color: #025211;
+  box-shadow: 3px 3px 3px #707070;
   color: white;
-  border-radius: 5px;
+  border-radius: 40px;
   margin-right: 20px;
   transition: background-color 0.3s ease;
 }
@@ -404,9 +411,11 @@
 
 .BackgroundMenu .backButton {
   position: absolute;
-  height: 100px;
-  width: 100px;
-  background-color: red;
+  height: 90px;
+  width: 90px;
+  background-color: #B5B5B5;
+  border-radius: 90px;
+
 }
 
 .BackgroundMenu .newButton {
@@ -418,13 +427,9 @@
   background-color: red;
 }
 
-
-
-
-
-
 .characterMenu {
   padding: 20px;
+  font-family: 'Merriweather Sans', sans-serif;
 }
 
 .characterMenu .grid-container {
@@ -516,6 +521,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  outline: 3px black;
 }
 
 .characterMenu textarea {
@@ -534,13 +540,13 @@
 }
 
 .characterMenu button {
-  padding: 10px 20px;
-  font-size: 16px;
+  padding: 15px 25px;
+  font-size: 20px;
   cursor: pointer;
-  border: 1px solid #007bff;
-  background-color: #007bff;
+  border: 1px solid black;
+  background-color: #026211;
   color: white;
-  border-radius: 5px;
+  border-radius: 30px;
   margin-right: 10px;
   transition: background-color 0.3s ease;
   margin-bottom: 10px;
@@ -576,9 +582,9 @@
 .characterMenu .menu-container {
   width: 100%;
   margin: 0 auto;
-  background: #fff;
+  /* background: #fff; */
   border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); */
 }
 
 .characterMenu .menu-header {
@@ -592,7 +598,12 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: #333;
+  background-color: #B5B5B5;
+  border-radius: 45px;
+  /* width: 10%;
+  height: 10%; */
+  margin: 2%;
+  padding: 0;
 }
 
 .characterMenu .character-card {
@@ -607,10 +618,11 @@
 
 .characterMenu .avatar img {
   display: block;
-  width: 80%;
+  width: 90%;
   aspect-ratio: 1;
   border-radius: 50%;
   object-fit: cover;
+  background-color: #B7B7B7;
 }
 
 .characterMenu .avatar  {
@@ -629,17 +641,28 @@
 
 .characterMenu .character-form label {
   grid-column: span 1; /* Labels span one column */
+  transform: translate3d(15px, 0, 0);
 }
 
 .characterMenu .character-form input,
 .characterMenu .character-form select {
   grid-column: span 1; /* Inputs/selects align with their labels */
+  font-family: 'Merriweather Sans', sans-serif;
+  font-size: medium;
+  padding: 5px 5px;
+  box-shadow: 2px 2px 2px #5f5f5f;
+  transform: translate3d(15px, 0, 0);
+  border: none;
 }
 
 .characterMenu .character-form #additional-info {
   grid-column: span 2; /* Full width (second column only) */
   height: 100px;
   resize: vertical;
+  border-width: 1px;
+  border-color: none;
+  box-shadow: 2px 2px 2px #5f5f5f;
+  transform: translate3d(15px, 0, 0);
 }
 
 .characterMenu .character-form .full-width {
@@ -668,10 +691,13 @@
   width: 80%;
   /* align-items: center; */
   justify-content: center;
+  font-size: large;
 }
 
 .characterMenu .form-right textarea {
   min-height: 120px; /* Ensure adequate height for the textarea */
+  font-family: 'Merriweather Sans', sans-serif;
+  font-size: large;
 }
 
 .characterMenu .character-sprites-button {
@@ -687,4 +713,13 @@
 
 .characterMenu .character-sprites-button:hover {
   background: #555;
+}
+
+.OverlayIcon {
+  width: 100%;
+}
+
+.OverlayIconCharacter {
+  width: 90px;
+  height: 90px;
 }

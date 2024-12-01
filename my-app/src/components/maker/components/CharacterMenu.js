@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import icon from './arrow.png';
 
 const CharacterMenu = ({ showNext, setShowNext, characters, setCharacters }) => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -75,14 +76,14 @@ const CharacterMenu = ({ showNext, setShowNext, characters, setCharacters }) => 
       {isHighlighted ? (
         <div className="menu-container">
           <div className="menu-header">
-            <button
-              className="back-button"
-              onClick={() => {
-                setIsHighlighted(false);
-                setShowNext(true);
-              }}
-            >
-              ←
+              <button
+                className="back-button"
+                onClick={() => {
+                  setIsHighlighted(false);
+                  setShowNext(true);
+                }}
+              >
+              <img src={icon} alt='icon' className='OverlayIconCharacter'></img>
             </button>
           </div>
           <div className="character-card">

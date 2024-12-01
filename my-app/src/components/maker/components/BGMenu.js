@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import icon from './arrow.png';
 
 const BGMenu = ({ showNext, setShowNext, backgrounds, setBackgrounds }) => {
   const [isHighlighted, setIsHighlighted] = useState(null);
@@ -83,7 +84,7 @@ const BGMenu = ({ showNext, setShowNext, backgrounds, setBackgrounds }) => {
       {
         isHighlighted ?
         (<div className="backButton" onClick = {changeToMain}>
-            
+            <img src={icon} alt='icon' className='OverlayIcon'></img>
         </div>)
         : null
         

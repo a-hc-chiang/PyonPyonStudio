@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import './Game.css';
+import TopMenu from '../shared/TopMenu';
+import BackgroundMusicMenu from "./BackgroundMusic";
 
 const GameLogic = () => {
     const gameData = {
@@ -224,7 +227,9 @@ const GameLogic = () => {
     }
 
     return (
-        <div style={{position: "relative", height: "100vh"}}>
+        <div style={{ height: "100%", margin: "0px"}}>
+            <TopMenu color={"#026211D3"} />
+            <BackgroundMusicMenu/>
             {currentScreen.background &&
                 renderSprite(currentScreen.background)}
 

@@ -1,0 +1,21 @@
+.background-music {
+    background-color: rgba(2, 98, 17, 0.83);
+    color: #FFFFFF;
+    font-size: 18px;
+    font-family: 'Cormorant Garamond', serif;
+    position: absolute;
+    height: 6%;
+    width: 25%;
+    border-radius: 30px;
+    top: 15%;
+    left: 73%;
+    padding-top: 5px;
+    padding-left: 15px;
+    box-sizing: border-box;
+}
+
+.cormorant-garamond-regular {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 400;
+    font-style: normal;
+}

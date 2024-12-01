@@ -18,14 +18,14 @@ const LandingPage = () => {
       <TopMenu color={"#df79ce"} />
       <div className={"LPContent"}>
         <div></div>
-        <div className={"LPLogoContent"}>
-          <p>Mascot+Text</p>
+        <div style={{backgroundImage: "/Pyon-chan.png"}} className={"LPLogoContent"}>
+
         </div>
-        <div className={"LPMenuContent"}>
-          <div className={"LPGenerateVNButton"} onClick={handleGenerateClick}>
+        <div className={"LPMenuContent "}>
+          <div className={"LPGenerateVNButton darumadrop-one-regular"} onClick={handleGenerateClick}>
             <p>Generate VN</p>
           </div>
-          <div className={"LPPlayGameButton"}>
+          <div className={"LPPlayGameButton darumadrop-one-regular"}>
             <p>Play Game</p>
           </div>
         </div> 

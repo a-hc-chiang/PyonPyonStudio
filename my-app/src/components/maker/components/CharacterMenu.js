@@ -199,9 +199,9 @@ const CharacterMenu = ({ showNext, setShowNext, characters, setCharacters }) => 
           <div
             key={"new"}
             className="background-item"
-            style={{ backgroundColor: "#DF79CE" }}
+            style={{ backgroundColor: "#DF79CE", fontSize:50, textAlign: 'center'}}
             onClick={handleAddCharacter}
-          ><p>+</p></div>
+          ><p style={{marginTop: "-15px"}}>+</p></div>
         </div>
       )}
     </div>

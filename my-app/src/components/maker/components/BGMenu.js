@@ -138,9 +138,11 @@ const BGMenu = ({ showNext, setShowNext, backgrounds, setBackgrounds }) => {
           <div
             key={"new"}
             className="background-item"
-            style={{ backgroundColor: '#DF79CE' }}
+            style={{ backgroundColor: "#DF79CE", fontSize: 50, textAlign: 'center'}}
             onClick={() => changeToAddNew()}
-          ></div>
+          ><p style={{ margin: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>+</p>
+            
+          </div>
         </div>
       )
       }

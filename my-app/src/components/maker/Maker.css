@@ -23,6 +23,7 @@
   border-radius: 30px;
   bottom: 2%;
   left:2%;
+  
   display: flex; /* Enable flexbox */
   /* justify-content: center; Horizontal alignment */
   align-items: center; /* Vertical alignment */
@@ -32,8 +33,43 @@
   height: auto; /* No need for a fixed height */
   width: auto; /* Adjust width dynamically */
   text-align: center;
-  padding: 5px; /* Optional for better spacing */
+  /* padding: 5px; Optional for better spacing */
   margin-left: 4%;
+
+}
+
+.topMenuAll .dropdown-menu {
+  position: absolute;
+
+  background-color: #df79ce;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  top: 9%;
+  left: 2%;
+  z-index: 100;
+}
+
+.topMenuAll .dropdown-menu button {
+  background-color: #F3CEED;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.topMenuAll .dropdown-menu button:hover {
+  background-color: #ff6cff;
+}
+
+.hidden {
+  display: none;
 }
 
 .LPContent{
@@ -62,7 +98,7 @@
 
 
 .LPLogoContent {
-  background-color: yellow; /* Optional for visibility */
+  background-image: url('Pyon-chan.png'); /* Optional for visibility */
   text-align: center;
   width:90%;
   aspect-ratio: 1;
@@ -70,7 +106,14 @@
   border-color: black;
   border-width: 2;
   border-style: dotted;
-  align-items: center; /* Aligns items vertically */
+  align-items: center; /* Aligns items vertically */                   /* <------ */
+  background-repeat:   no-repeat;
+  background-position: center center; 
+  background-color: white;
+  display: flex;
+  align-items: center; /* Centers items vertically */
+  justify-content: center; /* Centers content horizontally */
+  background-size: 80%; /* Makes the image slightly smaller */
 }
 
 .LPMenuContent {
@@ -81,23 +124,30 @@
 }
 
 .LPGenerateVNButton {
-  background-color: #79dfce; /* Button background color */
+  background-color: #074A11; /* Button background color */
   padding: 10px 20px; /* Button size */
   margin: 5px 0; /* Space between buttons */
   border-radius: 5px; /* Rounded corners */
   cursor: pointer; /* Pointer cursor */
   text-align: left;
   height: 100px;
+  color: white;
+  display: flex;
+  align-items: center;
+  font-size:40px;
 }
 
 .LPPlayGameButton {
-  background-color: #79dfce; /* Button background color */
+  background-color: #074A11; /* Button background color */
   padding: 10px 20px; /* Button size */
   margin: 5px 0; /* Space between buttons */
   border-radius: 5px; /* Rounded corners */
   cursor: pointer; /* Pointer cursor */
   text-align: left;
   width: 40%;
+  color: white;
+  display: flex;
+  align-items: center;
 }
 
 
@@ -124,6 +174,7 @@
   background-color: #F3CEED;;
   margin-left: 10%;
   height: 60%;
+  font-size: 20px;
   border-radius: 30px;
   cursor: pointer;
 }
@@ -148,11 +199,23 @@
   bottom: 3%;
   background-color: #025211;
   color: white;
-  height: 10%;
+  border-radius: 30px;
+
   width: 20%;
   right: 3%;
   cursor: pointer;
+  font-size: 30px;
+  /* text-align: center; */
+  justify-content: center;
+  align-content: center;
+  display:flex;
 }
+
+.VNCreationNextText{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 
 .GameInfoMenu {
   max-width: 90%;
@@ -173,15 +236,34 @@
   font-weight: bold;
 }
 
+.GameInfoMenu .less{
+  flex: 0.6; /* Input fields take remaining space */
+  padding: 8px;
+  font-size: 14px;
+  width: 70%;
+  box-sizing: border-box;
+  box-shadow: 5px 5px 5px #121212;
+}
+
+.GameInfoMenu .more{
+  box-shadow: 5px 5px 5px #5f5f5f;
+}
+
+.GameInfoMenu .more{
+  height: 200%;
+}
+
+
 .GameInfoMenu select,
 .GameInfoMenu input,
 .GameInfoMenu textarea {
   flex: 1; /* Input fields take remaining space */
   padding: 8px;
   font-size: 14px;
-  width: 100%;
+  width: 50%;
   box-sizing: border-box;
 }
+
 
 .GameInfoMenu .radio-group {
   display: flex;
@@ -209,7 +291,7 @@
 .BackgroundMenu .background-item {
   position: relative;
   width: 90%;
-  padding-top: 50%; /* Maintain aspect ratio */
+  aspect-ratio: 2;
   margin-top: 5%;
   background-size: cover;
   background-position: center;
@@ -217,6 +299,10 @@
   overflow: hidden;
   transition: filter 0.3s ease;
   cursor: pointer;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  text-align: center;
 }
 
 .BackgroundMenu .background-item:hover {
@@ -364,6 +450,10 @@
   border-radius: 50%;
   overflow: visible;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .characterMenu .background-item:hover {

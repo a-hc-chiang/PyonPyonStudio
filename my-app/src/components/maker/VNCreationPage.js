@@ -119,9 +119,9 @@ const VNCreationPage = () => {
       <TopMenu color={"#df79ce"} />
       <div className={"VNCreationMenu"}>
         <div className={"VNCreationTopBar"}>
-          <div className={"VNCreationTab"} onClick={() => {changeMenuIdx(0)}}><p className={"VNCreationTabText"}>Characters</p></div>
-          <div className={"VNCreationTab"} onClick={() => {changeMenuIdx(1)}}><p className={"VNCreationTabText"}>Story</p></div>
-          <div className={"VNCreationTab"} onClick={() => {changeMenuIdx(2)}}><p className={"VNCreationTabText"}>Background Assets</p></div>
+          <div className={"VNCreationTab comic-neue-bold"} onClick={() => {changeMenuIdx(0)}}><p className={"VNCreationTabText"}>Characters</p></div>
+          <div className={"VNCreationTab comic-neue-bold"} onClick={() => {changeMenuIdx(1)}}><p className={"VNCreationTabText"}>Story</p></div>
+          <div className={"VNCreationTab comic-neue-bold"} onClick={() => {changeMenuIdx(2)}}><p className={"VNCreationTabText"}>Background Assets</p></div>
         </div>
         <div className="VNCreationMenuContent">
           {(() => {
@@ -158,8 +158,8 @@ const VNCreationPage = () => {
         {
           showNext ?
           (
-            <div className={"VNCreationNext"} onClick={handleNextClick}>
-              <p className={"VNCreationNextText"}>{(currMenuIdx % 3 == 2) ? "Generate" : "Next"}</p>
+            <div className={"VNCreationNext merriweather-sans-300"} onClick={handleNextClick}>
+              <p className={"VNCreationNextText darumadrop-one-regular"}>{(currMenuIdx % 3 == 2) ? "Generate?!" : "Next"}</p>
             </div>
           ) : null
         }

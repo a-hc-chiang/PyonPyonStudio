@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@400;700&display=swap');
+
+.form-group{
+    font-family: 'Merriweather Sans', sans-serif;
+    font-size: large; 
+    transform: translateX(7.5%); 
+    padding-top: 1;
+    box-shadow: 5px;
+    text-shadow: 5px;
+}
+
+.form-group .numDecisions{
+    display: inline-block;
+    width: 50% !important;
+}
+
+.form-group #setting{
+    width: 80%;
+}
+
+.form-group.less {
+    /* wid */
+
+}

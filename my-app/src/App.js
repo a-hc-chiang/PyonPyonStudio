@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import LandingPage from './components/maker/LandingPage';
 import VNCreationPage from './components/maker/VNCreationPage';
-
+import GameLogic from './components/game/Game.js';
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/generate-vn" element={<VNCreationPage/>} />
-        {/* Add more routes as needed */}
+          <Route path="/play-game" element={<GameLogic />} />
       </Routes>
     </BrowserRouter>
   );

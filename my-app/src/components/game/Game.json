@@ -1,0 +1,137 @@
+{
+  "game": [
+    {
+      "screenId": 1,
+      "textboxInfo": {
+        "character": "Hot Guy",
+        "dialogue": "Hi there! Welcome to the most exciting adventure of your life. Ready to dive in?",
+        "sprite": 1
+      },
+      "background": 2,
+      "regularSprite": [
+        3,
+        4
+      ],
+      "nextType": "screenId",
+      "nextScreen": 2
+    },
+    {
+      "screenId": 2,
+      "textboxInfo": {
+        "character": "Hot Guy",
+        "dialogue": "You look amazing today! Let me show you something special."
+      },
+      "nextType": "screenId",
+      "nextScreen": 3
+    },
+    {
+      "screenId": 3,
+      "textboxInfo": {
+        "character": "Hot Guy",
+        "dialogue": "I was wondering… Are you ready to explore what’s in my world?"
+      },
+      "nextType": "choiceId",
+      "nextScreen": [
+        1,
+        2
+      ]
+    },
+    {
+      "screenId": 4,
+      "textboxInfo": {
+        "character": "Hot Guy",
+        "dialogue": "Are you a magician? Because every time I look at you, everyone else disappears."
+      },
+      "nextType": "choiceId",
+      "nextScreen": [
+        3,
+        4
+      ]
+    },
+    {
+      "screenId": 5,
+      "textboxInfo": {
+        "character": "Hot Guy",
+        "dialogue": "Congrats! You just unlocked the key to my heart."
+      },
+      "nextType": "screenId",
+      "nextScreen": 6
+    },
+    {
+      "screenId": 6,
+      "textboxInfo": {
+        "character": "Hot Guy",
+        "dialogue": "The game is over. But you know what’s not over? My love for you."
+      },
+      "nextType": "screenId",
+      "nextScreen": null
+    }
+  ],
+  "choices": [
+    {
+      "choiceId": 1,
+      "choiceText": "Explore your heart",
+      "nextScreen": 5
+    },
+    {
+      "choiceId": 2,
+      "choiceText": "Stay lost in your eyes",
+      "nextScreen": 6
+    },
+    {
+      "choiceId": 3,
+      "choiceText": "Let’s see the magic",
+      "nextScreen": 5
+    },
+    {
+      "choiceId": 4,
+      "choiceText": "Disappearing sounds fun!",
+      "nextScreen": 6
+    },
+    {
+      "choiceId": 5,
+      "choiceText": "Tell me more about you",
+      "nextScreen": 3
+    },
+    {
+      "choiceId": 6,
+      "choiceText": "Are you always this smooth?",
+      "nextScreen": 4
+    }
+  ],
+  "sprites": [
+    {
+      "spriteId": 1,
+      "spriteType": "textboxSprite",
+      "url": "textboxSpriteUrl.png",
+      "position": {
+        "xPos": 100,
+        "yPos": 200
+      }
+    },
+    {
+      "spriteId": 2,
+      "spriteType": "backgroundImage",
+      "url": "backgroundImageUrl.jpg",
+      "position": null
+    },
+    {
+      "spriteId": 3,
+      "spriteType": "regularSprite",
+      "url": [
+        "regularSprite1.png",
+        "regularSprite2.png"
+      ],
+      "positions": [
+        {
+          "xPos": 100,
+          "yPos": 200
+        },
+        {
+          "xPos": 300,
+          "yPos": 400
+        }
+      ]
+    }
+  ]
+}

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './Maker.css';
-
 import TopMenu from '../shared/TopMenu'
-
 import BottomMenu from './shared/BottomMenu';
 import { useNavigate } from 'react-router-dom';
+
 
 const LandingPage = () => {
   const navigate = useNavigate(); 
@@ -12,6 +11,10 @@ const LandingPage = () => {
   const handleGenerateClick = () => {
     navigate('/generate-vn');
   };
+
+  const handlePlayGame = () => {
+    navigate('/play-game');
+  }
 
   return (
     <div className={"MakerPage"}>
@@ -25,12 +28,12 @@ const LandingPage = () => {
           <div className={"LPGenerateVNButton"} onClick={handleGenerateClick}>
             <p>Generate VN</p>
           </div>
-          <div className={"LPPlayGameButton"}>
+          <div className={"LPPlayGameButton"} onClick={handlePlayGame}>
             <p>Play Game</p>
           </div>
         </div> 
         <div></div>
-        
+
       </div>
       <BottomMenu></BottomMenu>
     </div>

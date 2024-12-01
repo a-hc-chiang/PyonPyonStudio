@@ -280,7 +280,6 @@ def openai_call(character_list, background_list, game_info):
     except Exception as e:
         print(f"Error during API call: {e}")
         return {"error": str(e)}, {"error": str(e)}
-<<<<<<< HEAD
     
 
 
@@ -376,8 +375,6 @@ def add_character():
     character_list.append(jsonRequest)
     result = character_collection.insert_one(jsonRequest)
     return jsonify({"inserted_id": str(result.inserted_id)})
-=======
->>>>>>> 55b2050857b97c14d7d801f847444a7a55ba86a5
 
 #adding bg entry 
 @app.route('/add-background', methods=['GET'])

@@ -380,9 +380,10 @@ def add_character():
 @app.route('/add-background', methods=['GET'])
 def add_background(): 
     jsonRequest = request.json
-    backgrounds_collection.append(jsonRequest)
+    background_list.append(jsonRequest)
     result = backgrounds_collection.insert_one(jsonRequest)
     return jsonify({"inserted_id": str(result.inserted_id)})
+
 #adding game entry
 @app.route('/create-game', methods=['GET'])
 def add_game_entry(): 

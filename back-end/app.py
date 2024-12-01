@@ -1,24 +1,37 @@
 from pymongo import MongoClient
 from dotenv import main
 import os
+from flask import Flask, request, jsonify
+import json
+from dotenv import load_dotenv
+#import my_openai_api
 
 '''
 MongoDB to store the user input
+To do: 
+query each table
+    game 
+
+add to each table: 
+    game
+    game_status
 '''
 
+character_list = []
+background_list = []
+game_info = {}
 
-#Establishing connection 
+app = Flask(__name__)
+load_dotenv()
+
+#Establishing connection to MongoDB
 main.load_dotenv()
-connection_url = "mongodb+srv://achiang2048:IzOuep2PfaLIE7K5@pyonpyonstudio.ydpew.mongodb.net/?retryWrites=true&w=majority&appName=PyonPyonStudio" #gets key value from .env file 
-
-# Connect to MongoDB
+connection_url = os.getenv('URL') #gets key value from .env file 
 client = MongoClient(connection_url)
 print(client)
 
-
 db_name = "PyonPyon" 
 db = client[db_name]
-# print(db)
 
 # Collections: 
 backgrounds_collection = db["Backgrounds"]
@@ -43,18 +56,42 @@ except Exception as e:
 # Optional: Close the connection after operations
 client.close()
 
-'''
-To do: 
-query each table
-    game 
+#adding character entry 
+@app.route('/create-character', methods=['GET'])
+def add_character(): 
+    jsonRequest = request.json
+    character_list.append(jsonRequest)
+    result = character_collection.insert_one(jsonRequest)
+    return jsonify({"inserted_id": str(result.inserted_id)})
 
-add to each table: 
-    character
-    background
-    game
-    game_info 
-    game_status
-'''
+#adding bg entry 
+@app.route('/add-background', methods=['GET'])
+def add_background(): 
+    jsonRequest = request.json
+    backgrounds_collection.append(jsonRequest)
+    result = backgrounds_collection.insert_one(jsonRequest)
+    return jsonify({"inserted_id": str(result.inserted_id)})
+
+#adding game entry
+@app.route('/create-game', methods=['GET'])
+def add_game_entry(): 
+    jsonRequest = request.get_json()
+    game_info = jsonRequest
+    result = game_info_collection.insert_one(jsonRequest)
+    return jsonify({"inserted_id": str(result.inserted_id)})
+
+#putting everything into JSON to the openAI API 
+def to_openAI_API(): 
+    data = {
+        "characterList": character_collection, 
+        "backgroundList": background_list, 
+        "game": game_info
+    }
+    request = {0: "Thing", 1:"Other thing"} #change later, this is where you hit the openai api 
+    result_0 = game_collection.insert_one(request[0])
+    result_1 = game_status_collection.insert_one(resquest[1])
+    return NULL 
+
 
 if __name__ == '__main__': 
     app.run(debug = True)

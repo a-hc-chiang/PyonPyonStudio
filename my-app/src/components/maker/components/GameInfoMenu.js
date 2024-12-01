@@ -17,6 +17,12 @@ const GameInfoMenu = ({ showNext, setShowNext, gameInfo, setGameInfo }) => {
     });
   }, [setting, playTime, numDecisions, callFeature, additionalFeatures]);
 
+  useEffect(() => {
+    setShowNext(true);
+  }, []);
+
+
+
   return (
     <div className="GameInfoMenu">
 

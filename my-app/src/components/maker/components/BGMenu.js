@@ -6,6 +6,16 @@ const BGMenu = ({ showNext, setShowNext, backgrounds, setBackgrounds }) => {
   const [highlightedURL, setHighlightedURL] = useState("");
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
+
+  useEffect(() => {
+    setHoveredIndex(null);
+    setHighlightedPrompt(null);
+    setHighlightedURL(null);
+    setShowNext(true);
+  }, []);
+
+
+
   useEffect(() => {
     if (isHighlighted) {
       
@@ -32,6 +42,7 @@ const BGMenu = ({ showNext, setShowNext, backgrounds, setBackgrounds }) => {
     setIsHighlighted(false);
     setHighlightedPrompt("");
     setHighlightedURL("");
+    setShowNext(true);
   };
 
   const handleMouseEnter = (index) => {
@@ -113,25 +124,27 @@ const BGMenu = ({ showNext, setShowNext, backgrounds, setBackgrounds }) => {
               onClick={() => changeToHighlighted(index)}
             >
               {hoveredIndex === index && (
-                <div className="delete-icon" onClick={() => handleDelete(index)}>
+                <div className="delete-icon" onClick={(event) => {
+                  event.stopPropagation(); // Prevents triggering the parent's onClick
+                  handleDelete(index);
+                }}>
                   ✖
                 </div>
               )}
+              
             </div>
+            
           ))}
-          <div ></div>
+          <div
+            key={"new"}
+            className="background-item"
+            style={{ backgroundColor: '#DF79CE' }}
+            onClick={() => changeToAddNew()}
+          ></div>
         </div>
       )
       }
 
-      {
-        !isHighlighted ?
-        (<div className="newButton" onClick = {changeToAddNew}>
-            
-        </div>)
-        : null
-        
-      }
       
     </div>
   );

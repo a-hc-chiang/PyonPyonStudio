@@ -6,6 +6,9 @@ const CharacterMenu = ({ showNext, setShowNext, characters, setCharacters }) => 
   const [isHighlighted, setIsHighlighted] = useState(null);
   const [highlightedCharacter, setHighlightedCharacter] = useState(null);
   const [isSpriteScreen, setIsSpriteScreen] = useState(false);
+  const [, forceUpdate] = React.useState(0);
+
+
 
   const handleAddCharacter = () => {
     const newCharacter = {
@@ -19,9 +22,9 @@ const CharacterMenu = ({ showNext, setShowNext, characters, setCharacters }) => 
     };
     // newCharactersList = [...characters, newCharacter];
     setCharacters([...characters, newCharacter]); // Add the new character to the list
-    setShowNext(false);
-    setIsHighlighted(true);
-    setHighlightedCharacter( newCharacter );
+    // setShowNext(false);
+    // setIsHighlighted(true);
+    // setHighlightedCharacter( newCharacter );
   };
 
   useEffect(() => {
@@ -31,6 +34,7 @@ const CharacterMenu = ({ showNext, setShowNext, characters, setCharacters }) => 
     setShowNext(true);
     setIsSpriteScreen(false);
   }, []);
+
 
   const handleEmotionChange = (index, value) => {
     const updatedSprites = [...highlightedCharacter.sprites];
@@ -101,7 +105,10 @@ const CharacterMenu = ({ showNext, setShowNext, characters, setCharacters }) => 
     setCharacters(updatedCharacters);
     setIsHighlighted(false);
     setShowNext(true);
+    // window.location.reload();
+    forceUpdate((prev) => prev + 1); // Increment the state to force re-render
   };
+  
 
   return (
     <div className="characterMenu">
@@ -244,6 +251,7 @@ const CharacterMenu = ({ showNext, setShowNext, characters, setCharacters }) => 
                         <option value="protagonist">Protagonist</option>
                         <option value="rival">Rival</option>
                         <option value="love interest">Love Interest</option>
+                        <option value="childhood best friend">Childhood Best Friend</option>
                       </select>
                     </div>
 

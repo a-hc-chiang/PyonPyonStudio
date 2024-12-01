@@ -9,6 +9,12 @@ import { useNavigate } from 'react-router-dom';
 
 const VNCreationPage = () => {
   const navigate = useNavigate();
+  const [fadeIn, setFadeIn] = useState(false);
+  useEffect(() => {
+    // Trigger fade-in after component mounts
+    setFadeIn(true);
+  }, []);
+
 
   const fakeCharacters = [
     {
@@ -44,19 +50,19 @@ const VNCreationPage = () => {
   const fakeBackgrounds = [
     {
       url: "/backgrounds/test1.jpg",
-      prompt: "damn"
+      prompt: "skibidi, anime, office, laboratory, medicine, apothecary"
     },
     {
       url: "/backgrounds/test2.jpg",
-      prompt: "life"
+      prompt: "rizzler, home, base, bedroom, cozy, poggers, rgb, poggers, computer"
     },
     {
       url: "/backgrounds/test3.jpg",
-      prompt: "is"
+      prompt: "ohio, beach, sunny, day, sand"
     },
     {
       url: "/backgrounds/test4.jpg",
-      prompt: "pog"
+      prompt: "dank, classroom, sunlight, pog champ"
     },
   ]; // for testing
 
@@ -74,6 +80,7 @@ const VNCreationPage = () => {
     "additionalFeatures": ""
   });
   const [backgrounds, setBackgrounds] = useState(fakeBackgrounds);
+  const [isLoading, setIsLoading] = useState(false);
   const [currMenu, setCurrMenu] = useState(null);
   const [showNext, setShowNext] = useState(true);
   
@@ -98,6 +105,7 @@ const VNCreationPage = () => {
       };
       try {
         // Make a POST request to the /generate-game-json-from-scratch endpoint
+        setIsLoading(true);
         const response = await fetch('http://127.0.0.1:5000/generate-game-json-from-scratch', {
           method: 'POST',
           headers: {
@@ -109,6 +117,7 @@ const VNCreationPage = () => {
         // Check if the response is successful
         if (response.ok) {
           const data = await response.json();
+          setIsLoading(false);
           console.log("Generated game status and game JSON:", data);
   
           console.log(data); // Assuming you have a state to store this data
@@ -150,9 +159,18 @@ const VNCreationPage = () => {
 
 
   return (
+    
     <div className={"MakerPage"}>
+      {
+        isLoading ? (
+          <div id="loading-screen" className="loading-screen">
+            <div className="diagonal-stripes"></div>
+            <div className="loading-text darumadrop-one-regular">Making the game</div>
+          </div> 
+        ) : null
+      }
       <TopMenu color={"#df79ce"} />
-      <div className={"VNCreationMenu"}>
+      <div className={`VNCreationMenu ${fadeIn ? "fade-in" : "fade-out"}`}>
         <div className={"VNCreationTopBar"}>
           <div className={"VNCreationTab comic-neue-bold"} onClick={() => {changeMenuIdx(0)}}><p className={"VNCreationTabText"}>Characters</p></div>
           <div className={"VNCreationTab comic-neue-bold"} onClick={() => {changeMenuIdx(1)}}><p className={"VNCreationTabText"}>Story</p></div>

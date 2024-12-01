@@ -16,7 +16,9 @@ from flask_cors import CORS
 
 
 
-
+character_list = []
+background_list = []
+game_info = {}
 # Load environment variables
 load_dotenv()
 
@@ -189,7 +191,7 @@ def make_image_from_prompt(prompt):
 
     payload = {
             "prompt": "anime, masterpiece, landscape, background," + brainrot + "," + prompt,  # extra networks also in prompts
-            "negative_prompt": "lowres, text, error, nsfw, cropped, worst quality, low quality, jpeg artifacts, ugly, duplicate, morbid, mutilated, out of frame, extra fingers, mutated hands, poorly drawn hands, poorly drawn face, mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra limbs, cloned face, disfigured, gross proportions, malformed limbs, missing arms, missing legs, extra arms, extra legs, fused fingers, too many fingers, long neck, username, watermark, signature",
+            "negative_prompt": "lowres, text, error, cropped, worst quality, low quality, jpeg artifacts, ugly, duplicate, morbid, mutilated, out of frame, extra fingers, mutated hands, poorly drawn hands, poorly drawn face, mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra limbs, cloned face, disfigured, gross proportions, malformed limbs, missing arms, missing legs, extra arms, extra legs, fused fingers, too many fingers, long neck, username, watermark, signature",
             "steps": 10,
             "width": 820,
             "height": 512,
@@ -229,7 +231,27 @@ def generate_image():
 
 
 
+@app.route('/create-character', methods=['GET'])
+def add_character(): 
+    jsonRequest = request.json
+    character_list.append(jsonRequest)
+    result = character_collection.insert_one(jsonRequest)
+    return jsonify({"inserted_id": str(result.inserted_id)})
 
+#adding bg entry 
+@app.route('/add-background', methods=['GET'])
+def add_background(): 
+    jsonRequest = request.json
+    backgrounds_collection.append(jsonRequest)
+    result = backgrounds_collection.insert_one(jsonRequest)
+    return jsonify({"inserted_id": str(result.inserted_id)})
+#adding game entry
+@app.route('/create-game', methods=['GET'])
+def add_game_entry(): 
+    jsonRequest = request.get_json()
+    game_info = jsonRequest
+    result = game_info_collection.insert_one(jsonRequest)
+    return jsonify({"inserted_id": str(result.inserted_id)})
 
 # API endpoint to generate the game status and game JSONs
 @app.route('/generate-game-json', methods=['GET'])

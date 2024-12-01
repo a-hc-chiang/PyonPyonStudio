@@ -23,6 +23,7 @@
   border-radius: 30px;
   bottom: 2%;
   left:2%;
+  
   display: flex; /* Enable flexbox */
   /* justify-content: center; Horizontal alignment */
   align-items: center; /* Vertical alignment */
@@ -32,8 +33,43 @@
   height: auto; /* No need for a fixed height */
   width: auto; /* Adjust width dynamically */
   text-align: center;
-  padding: 5px; /* Optional for better spacing */
+  /* padding: 5px; Optional for better spacing */
   margin-left: 4%;
+
+}
+
+.topMenuAll .dropdown-menu {
+  position: absolute;
+
+  background-color: #df79ce;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  top: 9%;
+  left: 2%;
+  z-index: 100;
+}
+
+.topMenuAll .dropdown-menu button {
+  background-color: #F3CEED;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.topMenuAll .dropdown-menu button:hover {
+  background-color: #FFBFF4;
+}
+
+.hidden {
+  display: none;
 }
 
 .LPContent{
@@ -62,15 +98,22 @@
 
 
 .LPLogoContent {
-  background-color: yellow; /* Optional for visibility */
+  background-image: url('Pyon-chan.png'); /* Optional for visibility */
   text-align: center;
   width:90%;
   aspect-ratio: 1;
   border-radius: 50%;
-  border-color: black;
+  /* border-color: black;
   border-width: 2;
-  border-style: dotted;
-  align-items: center; /* Aligns items vertically */
+  border-style: dotted; */
+  align-items: center; /* Aligns items vertically */                   /* <------ */
+  background-repeat:   no-repeat;
+  background-position: center center; 
+  background-color: #77b281cd;
+  display: flex;
+  align-items: center; /* Centers items vertically */
+  justify-content: center; /* Centers content horizontally */
+  background-size: 80%; /* Makes the image slightly smaller */
 }
 
 .LPMenuContent {
@@ -81,28 +124,42 @@
 }
 
 .LPGenerateVNButton {
-  background-color: #79dfce; /* Button background color */
+  background-color: #074A11; /* Button background color */
   padding: 10px 20px; /* Button size */
   margin: 5px 0; /* Space between buttons */
   border-radius: 5px; /* Rounded corners */
   cursor: pointer; /* Pointer cursor */
   text-align: left;
   height: 100px;
+  color: white;
+  display: flex;
+  align-items: center;
+  font-size:50px;
 }
 
 .LPPlayGameButton {
-  background-color: #79dfce; /* Button background color */
+  background-color: #074A11; /* Button background color */
   padding: 10px 20px; /* Button size */
   margin: 5px 0; /* Space between buttons */
   border-radius: 5px; /* Rounded corners */
   cursor: pointer; /* Pointer cursor */
   text-align: left;
   width: 40%;
+  color: white;
+  display: flex;
+  align-items: center;
 }
 
+.LPPlayGameButton:hover {
+  background-color: #026211;
+}
+
+.LPGenerateVNButton:hover {
+  background-color: #026211;
+}
 
 .VNCreationTopBar {
-  background-color: #79dfce; /* Button background color */
+  background-color: #026211; /* Button background color */
   height: 10%;
   border-radius: 10px;
   margin: 1%;
@@ -124,7 +181,10 @@
   background-color: #F3CEED;;
   margin-left: 10%;
   height: 60%;
+  font-size: 25px;
   border-radius: 30px;
+  cursor: pointer;
+  font-display: bold;
 }
 
 .VNCreationTabSelected {
@@ -145,11 +205,25 @@
 .VNCreationNext{
   position:absolute;
   bottom: 3%;
-  background-color: green;
-  height: 10%;
+  background-color: #025211;
+  color: white;
+  border-radius: 30px;
+
   width: 20%;
   right: 3%;
+  cursor: pointer;
+  font-size: 30px;
+  /* text-align: center; */
+  justify-content: center;
+  align-content: center;
+  display:flex;
 }
+
+.VNCreationNextText{
+  margin-top: 0px;
+  margin-bottom: 10px;
+}
+
 
 .GameInfoMenu {
   max-width: 90%;
@@ -170,15 +244,35 @@
   font-weight: bold;
 }
 
+.GameInfoMenu .less{
+  flex: 0.6; /* Input fields take remaining space */
+  padding: 8px;
+  font-size: 14px;
+  width: 70%;
+  box-sizing: border-box;
+  box-shadow: 5px 5px 5px #5f5f5f;
+  font-family: 'Merriweather Sans', sans-serif;
+}
+
+.GameInfoMenu .more{
+  box-shadow: 5px 5px 5px #5f5f5f;
+}
+
+.GameInfoMenu .more{
+  height: 200%;
+}
+
+
 .GameInfoMenu select,
 .GameInfoMenu input,
 .GameInfoMenu textarea {
   flex: 1; /* Input fields take remaining space */
   padding: 8px;
   font-size: 14px;
-  width: 100%;
+  width: 50%;
   box-sizing: border-box;
 }
+
 
 .GameInfoMenu .radio-group {
   display: flex;
@@ -192,6 +286,8 @@
 
 .BackgroundMenu {
   padding: 20px;
+  overflow: auto;
+  height: 450px;
 }
 
 .BackgroundMenu .grid-container {
@@ -201,19 +297,68 @@
   align-content: center; /* Vertically centers the grid content */
   justify-items: center; /* Horizontally centers items in each grid cell */
   margin-top: -2%;
+
 }
 
 .BackgroundMenu .background-item {
   position: relative;
   width: 90%;
-  padding-top: 50%; /* Maintain aspect ratio */
+  aspect-ratio: 2;
   margin-top: 5%;
   background-size: cover;
   background-position: center;
   border-radius: 8px;
   overflow: hidden;
   transition: filter 0.3s ease;
+  cursor: pointer;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  text-align: center;
 }
+
+
+.characterMenu .sprites{
+  gap: 15px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 items per row */
+  height: 300px;
+  justify-items: center; /* Horizontally centers items in each grid cell */
+  width: 95%;
+  overflow:auto;
+  /* border: 2px solid black; */
+  /* border-style: dashed; */
+  /* border-radius: 20%; */
+  background-color: #F3CEED;
+
+  transform: translate3d(0, -35%, 0);
+  width: 700px;
+}
+
+.characterMenu  .sprites .background-item:hover {
+  filter: brightness(70%);
+}
+
+.characterMenu  .sprites .background-item {
+  position: relative;
+  width: 150px;
+  aspect-ratio: 0.8;
+  /* margin-bottom: 200px; */
+  margin-top: 10px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: filter 0.3s ease;
+  cursor: pointer;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  background-color: white;
+  background-position: center top 2px;
+}
+
 
 .BackgroundMenu .background-item:hover {
   filter: brightness(70%);
@@ -262,9 +407,12 @@
 }
 
 .BackgroundMenu .generated-image {
-  max-width: 100%;
-  max-height: 100%;
+  max-width: 110%;
+  max-height: 110%;
   object-fit: contain;
+  transform: translate3d(-3.5%, 5%, 0);
+  border-radius: 3%;
+  width: 600px;
 }
 
 .BackgroundMenu .input-container {
@@ -277,34 +425,38 @@
 }
 
 .BackgroundMenu textarea {
-  width: 100%;
-  height: 100%;
+  width: 110%;
+  height: 200px;
   padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  font-size: x-large;
+  border: none;
+  /* border-radius: 3%; */
   resize: none;
+  transform: translate3d(0, 10%, 0);
+  font-family: 'Merriweather Sans', sans-serif;
 }
 
 .BackgroundMenu .button-container {
-  margin-top: 10px;
+  transform: translate3d(-5%, -20%, 0);
   
 }
 
 .BackgroundMenu button {
-  padding: 10px 20px;
-  font-size: 16px;
+  padding: 15px 20px;
+  transform: translate3d(20%, 50%, 0);
+  font-size: larger;
   cursor: pointer;
-  border: 1px solid #007bff;
-  background-color: #007bff;
+  border: 1px solid #000000;
+  background-color: #026211;
+  box-shadow: 3px 3px 3px #707070;
   color: white;
-  border-radius: 5px;
+  border-radius: 40px;
   margin-right: 20px;
   transition: background-color 0.3s ease;
 }
 
 .BackgroundMenu button:hover {
-  background-color: #0056b3;
+  background-color: #1D6B2A;
 }
 
 .BackgroundMenu button:disabled {
@@ -314,16 +466,341 @@
 
 .BackgroundMenu .backButton {
   position: absolute;
-  height: 100px;
-  width: 100px;
-  background-color: red;
+  height: 90px;
+  width: 90px;
+  background-color: #074A11;
+  border-radius: 90px;
+
+}
+
+.BackgroundMenu .backButton:hover {
+  background-color: #026211;
 }
 
 .BackgroundMenu .newButton {
   position: absolute;
   height: 100px;
   width: 100px;
-  right: 40px;
+  left: 40px;
   bottom: 40px;
   background-color: red;
+}
+
+.characterMenu {
+  padding: 20px;
+  font-family: 'Merriweather Sans', sans-serif;
+}
+
+.characterMenu .grid-container {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr); /* 3 items per row */
+  gap: 10px; /* Spacing between items */
+  align-content: center; /* Vertically centers the grid content */
+  justify-items: center; /* Horizontally centers items in each grid cell */
+  margin-top: -2%;
+}
+
+.characterMenu .background-item {
+  position: relative;
+  width: 90%;
+  aspect-ratio: 1;
+  margin-top: 5%;
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: filter 0.3s ease;
+  background-color: lightgrey;
+  border-radius: 50%;
+  overflow: visible;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 100px;
+}
+
+.characterMenu .background-item:hover {
+  filter: brightness(70%);
+}
+
+.characterMenu .delete-icon {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  width: 24px;
+  height: 24px;
+  background-color: red;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  elevation: 10;
+}
+
+.characterMenu .delete-icon:hover {
+  background-color: darkred;
+}
+
+
+.characterMenu .image-generator-menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.characterMenu .image-container {
+  flex: 1;
+  min-width: 60%;
+  max-width: 60%;
+  height: 400px;
+  margin-right: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.characterMenu .generated-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.characterMenu .input-container {
+  flex: 1;
+  min-width: 30%;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  outline: 3px black;
+}
+
+.characterMenu textarea {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  resize: none;
+}
+
+.characterMenu .button-container {
+  margin-top: 10px;
+  
+}
+
+.characterMenu button {
+  padding: 15px 25px;
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #026211;
+  color: white;
+  border-radius: 30px;
+  margin-right: 10px;
+  transition: background-color 0.3s ease;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  margin-top: 20px;
+  transform: translate3d(0, -15%, 0);
+}
+
+.characterMenu button:hover {
+  background-color: #1D6B2A;
+}
+
+.characterMenu button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.characterMenu .backButton {
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  background-color: red;
+}
+
+.characterMenu .newButton {
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  left: 40px;
+  bottom: 40px;
+  background-color: red;
+}   
+
+.characterMenu .menu-container {
+  width: 100%;
+  margin: 0 auto;
+  /* background: #fff; */
+  border-radius: 8px;
+  /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); */
+}
+
+.characterMenu .menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.characterMenu .back-button {
+  font-size: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  background-color: #074A11;
+  border-radius: 45px;
+  /* width: 10%;
+  height: 10%; */
+  margin: 2%;
+  padding: 0;
+}
+
+.characterMenu .character-card {
+  margin-top: 20px;
+}
+
+.characterMenu .character-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.characterMenu .avatar img {
+  display: block;
+  width: 200px;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-color: black;
+  border-width: 10px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: #B7B7B7;
+  transform: translate3d(10px, -20%, 0);
+}
+
+.characterMenu .avatar  {
+  width: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background-color: red; */
+
+}
+
+.characterMenu .outerAlignment {
+  height: 200px
+}
+
+.characterMenu .character-form {
+  display: grid;
+  height: 400px;
+  grid-template-columns: 1fr 1fr; /* Two equal columns */
+  gap: 15px; /* Spacing between elements */
+  width: 800px;
+}
+
+.characterMenu .character-form label {
+  grid-column: span 1; /* Labels span one column */
+  transform: translate3d(15px, 0, 0);
+}
+
+.characterMenu .character-form input,
+.characterMenu .character-form select {
+  grid-column: span 1; /* Inputs/selects align with their labels */
+  font-family: 'Merriweather Sans', sans-serif;
+  font-size: medium;
+  padding: 5px 5px;
+  box-shadow: 2px 2px 2px #5f5f5f;
+  transform: translate3d(15px, 0, 0);
+  border: none;
+}
+
+.characterMenu .character-form #additional-info {
+  grid-column: span 2; /* Full width (second column only) */
+  height: 100px;
+  resize: vertical;
+  border-width: 1px;
+  border-color: none;
+  box-shadow: 2px 2px 2px #5f5f5f;
+  transform: translate3d(15px, 0, 0);
+}
+
+.characterMenu .character-form .full-width {
+  grid-column: span 2; /* Make label for "Additional Information" span full width */
+}
+
+.characterMenu .character-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px; /* Space between avatar and form */
+}
+
+.characterMenu .character-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two equal columns */
+  gap: 20px; /* Space between columns */
+  margin-top: -5%;
+  align-items: start; /* Align content at the top */
+}
+
+.characterMenu .form-left,
+.characterMenu .form-right {
+  display: flex;
+  flex-direction: column;
+  gap: 2px; /* Space between elements */
+  width: 80%;
+  /* align-items: center; */
+  justify-content: center;
+  font-size: large;
+  transform: translate3d(0, -20%, 0);
+}
+
+.characterMenu .form-right textarea {
+  min-height: 120px; /* Ensure adequate height for the textarea */
+  font-family: 'Merriweather Sans', sans-serif;
+  font-size: large;
+}
+
+.characterMenu .character-sprites-button {
+  display: block;
+  margin: 20px auto 0;
+  padding: 10px 20px;
+  background: #333;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.characterMenu .character-sprites-button:hover {
+  background: #555;
+}
+
+.OverlayIcon {
+  width: 100%;
+  filter: invert(100%);
+}
+
+.OverlayIconCharacter {
+  width: 90px;
+  height: 90px;
+  filter: invert(100%);
+}
+
+.emotion-input {
+  font-family: 'Merriweather Sans', sans-serif;
+  padding: 1%;
+  border: none;
+  margin: 4%;
 }

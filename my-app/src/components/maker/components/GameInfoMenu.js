@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import '../GameInfoMenu.css';
 
 const GameInfoMenu = ({ showNext, setShowNext, gameInfo, setGameInfo }) => {
   const [setting, setSetting] = useState("");
@@ -17,13 +18,20 @@ const GameInfoMenu = ({ showNext, setShowNext, gameInfo, setGameInfo }) => {
     });
   }, [setting, playTime, numDecisions, callFeature, additionalFeatures]);
 
+  useEffect(() => {
+    setShowNext(true);
+  }, []);
+
+
+
   return (
     <div className="GameInfoMenu">
 
       {/* Setting Dropdown */}
       <div className="form-group">
-        <label htmlFor="setting">Setting:</label>
+        <label htmlFor="setting">Setting 🏖️</label>
         <select
+          className="less"
           id="setting"
           value={setting}
           onChange={(e) => setSetting(e.target.value)}
@@ -40,8 +48,9 @@ const GameInfoMenu = ({ showNext, setShowNext, gameInfo, setGameInfo }) => {
 
       {/* Playtime Input */}
       <div className="form-group">
-        <label htmlFor="playTime">Play Time (minutes):</label>
+        <label htmlFor="playTime">Estimated Play Time (mins) ⏰ </label>
         <input
+          className="less"
           id="playTime"
           type="number"
           value={playTime}
@@ -51,8 +60,9 @@ const GameInfoMenu = ({ showNext, setShowNext, gameInfo, setGameInfo }) => {
 
       {/* Number of Decisions Input */}
       <div className="form-group">
-        <label htmlFor="numDecisions">Number of Decisions:</label>
+        <label htmlFor="numDecisions">Number of Decisions 🤔</label>
         <input
+          className="less"
           id="numDecisions"
           type="number"
           value={numDecisions}
@@ -89,8 +99,9 @@ const GameInfoMenu = ({ showNext, setShowNext, gameInfo, setGameInfo }) => {
 
       {/* Additional Features Textarea */}
       <div className="form-group">
-        <label htmlFor="additionalFeatures">Additional Features:</label>
+        <label htmlFor="additionalFeatures">Any Additional Features! </label>
         <textarea
+          className="more"
           id="additionalFeatures"
           value={additionalFeatures}
           onChange={(e) => setAdditionalFeatures(e.target.value)}

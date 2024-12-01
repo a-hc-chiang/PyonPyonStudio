@@ -10,7 +10,34 @@ import { useNavigate } from 'react-router-dom';
 const VNCreationPage = () => {
   const navigate = useNavigate();
 
-  const fakeCharacter = [
+  const fakeCharacters = [
+    {
+ 
+      name: "A.",
+      gender: "female",
+      pronouns: ["she", "her"],
+      tropes: ["tsundere"],
+      addedInfo: "into art, business and computer science",
+      role: "protagonist",
+      sprites: [
+        {
+          emotion: "happy",
+          url: "/characters/A1/A1.png"
+        },
+        {
+          emotion: "amog",
+          url: "/characters/A1/A2.png"
+        },
+        {
+          emotion: "angry",
+          url: "/characters/A1/A3.png"
+        },
+        {
+          emotion: "love",
+          url: "/characters/A1/A4.png"
+        }
+      ]
+    }
 
 
   ]; // for testing
@@ -35,10 +62,10 @@ const VNCreationPage = () => {
 
   
   const menus = ["Characters", "Story", "Background Assets"]
-  const [currMenuIdx, setCurrMenuIdx ] = useState(2);
+  const [currMenuIdx, setCurrMenuIdx ] = useState(0);
 
   // these get fed into the backend when generate is selected
-  const [characters, setCharacters] = useState([]);
+  const [characters, setCharacters] = useState(fakeCharacters);
   const [gameInfo, setGameInfo] = useState({
     "setting": "",
     "playTime": 30,
@@ -55,6 +82,10 @@ const VNCreationPage = () => {
     backgroundColor: 'blue', 
   };
 
+  const changeMenuIdx = (idx) => {
+    setCurrMenuIdx(idx);
+  }
+
   const handleNextClick = () => {
     // go to next or submit depending on what currMenuIdx we are on, save the information here
     if (currMenuIdx == 2){
@@ -66,17 +97,6 @@ const VNCreationPage = () => {
     }
   };
 
-  const addCharacter = (charInfo) => {
-    // code to add a character based on some params. info is a json with name, gender, sprites, pic, etc.
-  }
-
-  const changeGameInfo = (gameInfo) => {
-    // code to add a character based on some params. info is a json
-  }
-
-  const addBackground = (bgInfo) => {
-    // code to add a character based on some params. info is a json with prompt description
-  }
 
   useEffect(() => {
     // set currMenu to be the char creation menu when page loads
@@ -99,9 +119,9 @@ const VNCreationPage = () => {
       <TopMenu color={"#df79ce"} />
       <div className={"VNCreationMenu"}>
         <div className={"VNCreationTopBar"}>
-          <div className={"VNCreationTab"}><p className={"VNCreationTabText"}>Characters</p></div>
-          <div className={"VNCreationTab"}><p className={"VNCreationTabText"}>Story</p></div>
-          <div className={"VNCreationTab"}><p className={"VNCreationTabText"}>Background Assets</p></div>
+          <div className={"VNCreationTab comic-neue-bold"} onClick={() => {changeMenuIdx(0)}}><p className={"VNCreationTabText"}>Characters</p></div>
+          <div className={"VNCreationTab comic-neue-bold"} onClick={() => {changeMenuIdx(1)}}><p className={"VNCreationTabText"}>Story</p></div>
+          <div className={"VNCreationTab comic-neue-bold"} onClick={() => {changeMenuIdx(2)}}><p className={"VNCreationTabText"}>Background Assets</p></div>
         </div>
         <div className="VNCreationMenuContent">
           {(() => {
@@ -138,8 +158,8 @@ const VNCreationPage = () => {
         {
           showNext ?
           (
-            <div className={"VNCreationNext"} onClick={handleNextClick}>
-              <p className={"VNCreationNextText"}>{(currMenuIdx % 3 == 2) ? "Generate" : "Next"}</p>
+            <div className={"VNCreationNext merriweather-sans-300"} onClick={handleNextClick}>
+              <p className={"VNCreationNextText darumadrop-one-regular"}>{(currMenuIdx % 3 == 2) ? "Generate?!" : "Next"}</p>
             </div>
           ) : null
         }

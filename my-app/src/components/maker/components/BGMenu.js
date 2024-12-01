@@ -1,10 +1,21 @@
 import React, { useState, useEffect } from 'react';
+import icon from './arrow.png';
 
 const BGMenu = ({ showNext, setShowNext, backgrounds, setBackgrounds }) => {
   const [isHighlighted, setIsHighlighted] = useState(null);
   const [highlightedPrompt, setHighlightedPrompt] = useState("");
   const [highlightedURL, setHighlightedURL] = useState("");
   const [hoveredIndex, setHoveredIndex] = useState(null);
+
+
+  useEffect(() => {
+    setHoveredIndex(null);
+    setHighlightedPrompt(null);
+    setHighlightedURL(null);
+    setShowNext(true);
+  }, []);
+
+
 
   useEffect(() => {
     if (isHighlighted) {
@@ -32,6 +43,7 @@ const BGMenu = ({ showNext, setShowNext, backgrounds, setBackgrounds }) => {
     setIsHighlighted(false);
     setHighlightedPrompt("");
     setHighlightedURL("");
+    setShowNext(true);
   };
 
   const handleMouseEnter = (index) => {
@@ -47,13 +59,59 @@ const BGMenu = ({ showNext, setShowNext, backgrounds, setBackgrounds }) => {
     setBackgrounds(updatedBackgrounds);
   };
 
-  const generateImage = () => {
-
+  const generateImage = async () => {
+    if (!highlightedPrompt) {
+      alert("Please enter a prompt before generating an image.");
+      return;
+    }
+  
+    try {
+      const response = await fetch("http://127.0.0.1:5000/generate-image", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ prompt: highlightedPrompt }),
+      });
+  
+      if (!response.ok) {
+        throw new Error("Image generation failed.");
+      }
+  
+      const blob = await response.blob();
+      const imageUrl = URL.createObjectURL(blob);
+      setHighlightedURL(imageUrl);
+    } catch (error) {
+      console.log(error);
+    }
   };
+  
 
   const saveImage = () => {
-
-  }
+    if (!highlightedURL || !highlightedPrompt) {
+      alert("No image or prompt to save. Generate an image first.");
+      return;
+    }
+  
+    // Save the image to the user's computer
+    // const link = document.createElement("a");
+    // link.href = highlightedURL;
+    // link.download = "generated_image.png";
+    // link.click();
+  
+    // Add the new background to the backgrounds array
+    const newBackground = {
+      url: highlightedURL,
+      prompt: highlightedPrompt,
+    };
+  
+    // Update backgrounds state
+    setBackgrounds((prevBackgrounds) => [...prevBackgrounds, newBackground]);
+  
+    // Optionally, reset the UI after saving the image
+    changeToMain(); // You can go back to the main view if desired
+  };
+  
 
   const handleAddBackground = () => {
     // const newCharacter = prompt("Enter the name of the new character:");
@@ -72,7 +130,7 @@ const BGMenu = ({ showNext, setShowNext, backgrounds, setBackgrounds }) => {
       {
         isHighlighted ?
         (<div className="backButton" onClick = {changeToMain}>
-            
+            <img src={icon} alt='icon' className='OverlayIcon'></img>
         </div>)
         : null
         
@@ -113,25 +171,29 @@ const BGMenu = ({ showNext, setShowNext, backgrounds, setBackgrounds }) => {
               onClick={() => changeToHighlighted(index)}
             >
               {hoveredIndex === index && (
-                <div className="delete-icon" onClick={() => handleDelete(index)}>
+                <div className="delete-icon" onClick={(event) => {
+                  event.stopPropagation(); // Prevents triggering the parent's onClick
+                  handleDelete(index);
+                }}>
                   ✖
                 </div>
               )}
+              
             </div>
+            
           ))}
-          <div ></div>
+          <div
+            key={"new"}
+            className="background-item"
+            style={{ backgroundColor: "#DF79CE", fontSize: 50, textAlign: 'center'}}
+            onClick={() => changeToAddNew()}
+          ><p style={{ margin: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>+</p>
+            
+          </div>
         </div>
       )
       }
 
-      {
-        !isHighlighted ?
-        (<div className="newButton" onClick = {changeToAddNew}>
-            
-        </div>)
-        : null
-        
-      }
       
     </div>
   );

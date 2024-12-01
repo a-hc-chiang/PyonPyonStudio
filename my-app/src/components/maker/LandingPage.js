@@ -4,7 +4,6 @@ import TopMenu from '../shared/TopMenu'
 import BottomMenu from './shared/BottomMenu';
 import { useNavigate } from 'react-router-dom';
 
-
 const LandingPage = () => {
   const navigate = useNavigate(); 
 
@@ -21,14 +20,14 @@ const LandingPage = () => {
       <TopMenu color={"#df79ce"} />
       <div className={"LPContent"}>
         <div></div>
-        <div className={"LPLogoContent"}>
-          <p>Mascot+Text</p>
+        <div style={{backgroundImage: "/Pyon-chan.png"}} className={"LPLogoContent"}>
+
         </div>
-        <div className={"LPMenuContent"}>
-          <div className={"LPGenerateVNButton"} onClick={handleGenerateClick}>
+        <div className={"LPMenuContent "}>
+          <div className={"LPGenerateVNButton darumadrop-one-regular"} onClick={handleGenerateClick}>
             <p>Generate VN</p>
           </div>
-          <div className={"LPPlayGameButton"} onClick={handlePlayGame}>
+          <div className={"LPPlayGameButton darumadrop-one-regular"} onClick={handlePlayGame}>
             <p>Play Game</p>
           </div>
         </div> 

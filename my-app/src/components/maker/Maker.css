@@ -212,7 +212,7 @@
 }
 
 .VNCreationNextText{
-  margin-top: 10px;
+  margin-top: 0px;
   margin-bottom: 10px;
 }
 
@@ -286,6 +286,7 @@
   align-content: center; /* Vertically centers the grid content */
   justify-items: center; /* Horizontally centers items in each grid cell */
   margin-top: -2%;
+
 }
 
 .BackgroundMenu .background-item {
@@ -304,6 +305,50 @@
   justify-content: center;
   text-align: center;
 }
+
+
+.characterMenu .sprites{
+  gap: 15px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 items per row */
+  gap: 10px; /* Spacing between items */
+  height: 400px;
+  justify-items: center; /* Horizontally centers items in each grid cell */
+  margin-top: -2%;
+  width: 95%;
+  overflow:auto;
+  margin-top: -80px;
+  border: 2px solid black;
+  border-style: dashed;
+  border-radius: 50px;
+  background-color: #F3CEED;
+  margin-right: 5%;
+}
+
+.characterMenu  .sprites .background-item:hover {
+  filter: brightness(70%);
+}
+
+.characterMenu  .sprites .background-item {
+  position: relative;
+  width: 150px;
+  aspect-ratio: 0.8;
+  /* margin-bottom: 200px; */
+  margin-top: 10px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: filter 0.3s ease;
+  cursor: pointer;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  background-color: white;
+  background-position: center top 2px;
+}
+
 
 .BackgroundMenu .background-item:hover {
   filter: brightness(70%);
@@ -609,8 +654,11 @@
   display: block;
   width: 80%;
   aspect-ratio: 1;
-  border-radius: 50%;
   object-fit: cover;
+  border-color: black;
+  border-width: 10px;
+  border-radius: 50%;
+  background-color: rgb(231, 231, 231);
 }
 
 .characterMenu .avatar  {
@@ -618,6 +666,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  /* background-color: red; */
+
 }
 
 .characterMenu .character-form {

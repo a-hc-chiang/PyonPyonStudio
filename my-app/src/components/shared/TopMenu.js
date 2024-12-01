@@ -7,8 +7,15 @@ const TopMenu = ({ color }) => {
   const navigate = useNavigate();
   const [showDropdown, setShowDropdown] = useState(false);
 
-  const handleGenerateClick = () => {
-    navigate('/generate-vn');
+  const handleGenerateClick = (idx) => {
+    if (idx == 0){
+      navigate('/');
+    } else if (idx == 1) {
+      navigate('/generate-vn');
+    } else {
+      navigate('/library');
+    }
+    
   };
 
   const toggleMenu = (e) => {
@@ -56,10 +63,9 @@ const TopMenu = ({ color }) => {
       showDropdown ?
       (
         <div className="dropdown-menu ">
-          <button onClick={handleGenerateClick}><p className='darumadrop-one-regular'>Generate VN</p></button>
-          <button><p className='darumadrop-one-regular'>Load VN</p></button>
-          <button><p className='darumadrop-one-regular'>Play new VN</p></button>
-          <button><p className='darumadrop-one-regular'>Save VN</p></button>
+          <button onClick={() => {handleGenerateClick(0)}}><p className='darumadrop-one-regular'>Go Home</p></button>
+          <button onClick={() => {handleGenerateClick(1)}}><p className='darumadrop-one-regular'>Generate VN</p></button>
+          <button onClick={() => {handleGenerateClick(2)}}><p className='darumadrop-one-regular'>Load Existing VN</p></button>
         </div>
       ):
       null

@@ -37,8 +37,32 @@ const CharacterMenu = ({ showNext, setShowNext, characters, setCharacters }) => 
     setHighlightedCharacter({ ...highlightedCharacter, sprites: updatedSprites });
   };
 
+  const handleDeleteSprite = (index) => {
+    // Create a new array excluding the sprite at the specified index
+    const updatedSprites = highlightedCharacter.sprites.filter((_, i) => i !== index);
+    
+    // Update the state with the new array
+    setHighlightedCharacter({ ...highlightedCharacter, sprites: updatedSprites });
+  };
+
   const handleMouseEnter = (index) => {
     setHoveredIndex(index);
+  };
+
+  const handleAddNewSprite = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const newSprite = {
+          url: reader.result, // The loaded image as a base64 URL
+          emotion: "", // Start with an empty emotion field
+        };
+        const updatedSprites = [...highlightedCharacter.sprites, newSprite];
+        setHighlightedCharacter({ ...highlightedCharacter, sprites: updatedSprites });
+      };
+      reader.readAsDataURL(file); // Convert image file to base64
+    }
   };
 
   const handleMouseLeave = () => {
@@ -99,9 +123,9 @@ const CharacterMenu = ({ showNext, setShowNext, characters, setCharacters }) => 
               <div className="avatar">
                 <img
                   src={
-                    highlightedCharacter.sprites[0]?.url || "avatar-placeholder.png"
+                    highlightedCharacter.sprites[0]?.url || null
                   }
-                  alt="Character Avatar"
+               
                 />
               </div>
               {
@@ -122,7 +146,7 @@ const CharacterMenu = ({ showNext, setShowNext, characters, setCharacters }) => 
                               className="delete-icon"
                               onClick={(event) => {
                                 event.stopPropagation(); // Prevents triggering the parent's onClick
-                                handleDelete(index);
+                                handleDeleteSprite(index);
                               }}
                             >
                               ✖
@@ -142,9 +166,27 @@ const CharacterMenu = ({ showNext, setShowNext, characters, setCharacters }) => 
                         </div>
                       </div>
                     ))}
-
                     
+                    {/* Add New Sprite Button */}
+                    <div
+                      key={"new"}
+                      className="background-item"
+                      style={{ backgroundColor: "#DF79CE", fontSize: 50, textAlign: "center", cursor: "pointer" }}
+                      onClick={() => document.getElementById("fileInput").click()} // Trigger hidden file input
+                    >
+                      <p style={{ marginTop: "-15px" }}>+</p>
+                    </div>
+
+                    {/* Hidden file input for sprite upload */}
+                    <input
+                      type="file"
+                      id="fileInput"
+                      style={{ display: "none" }}
+                      accept="image/*"
+                      onChange={handleAddNewSprite} // Handle new sprite upload
+                    />
                   </div>
+
                 ) :
                 (
                   <form className="characterMenu character-form">

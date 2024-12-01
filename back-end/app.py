@@ -4,94 +4,157 @@ import os
 from flask import Flask, request, jsonify
 import json
 from dotenv import load_dotenv
-#import my_openai_api
+import openai
 
-'''
-MongoDB to store the user input
-To do: 
-query each table
-    game 
-
-add to each table: 
-    game
-    game_status
-'''
-
-character_list = []
-background_list = []
-game_info = {}
-
-app = Flask(__name__)
+# Load environment variables
 load_dotenv()
 
-#Establishing connection to MongoDB
+# Initialize OpenAI API
+openai.api_key = os.getenv('OPENAI_API_KEY')
+
+# Initialize Flask app
+app = Flask(__name__)
+
+# Connect to MongoDB
 main.load_dotenv()
-connection_url = os.getenv('URL') #gets key value from .env file 
+connection_url = os.getenv('URL')  # MongoDB connection URL from .env file
 client = MongoClient(connection_url)
 print(client)
 
 db_name = "PyonPyon" 
 db = client[db_name]
 
-# Collections: 
+# Collections
 backgrounds_collection = db["Backgrounds"]
 character_collection = db["Characters"]
-game_collection = db["Games"]
 game_info_collection = db["VNInformation"]
 game_status_collection = db["GameStatuses"]
 
-# Print all documents in the 'Backgrounds' collection
-print("Backgrounds Collection:")
-for document in backgrounds_collection.find():
-    print(document)
-
-# Test the connection
+# Test MongoDB connection
 try:
-    # List all databases to ensure the connection works
     print("Databases:", client.list_database_names())
     print("Connected to MongoDB successfully!")
 except Exception as e:
     print("Error connecting to MongoDB:", e)
 
-# Optional: Close the connection after operations
-client.close()
+# Helper function to fetch data from MongoDB collections
+def fetch_data_from_db():
+    character_list = list(character_collection.find())
+    background_list = list(backgrounds_collection.find())
+    game_info = game_info_collection.find_one()  # Assuming there's only one game info document
+    return character_list, background_list, game_info
 
-#adding character entry 
-@app.route('/create-character', methods=['GET'])
-def add_character(): 
-    jsonRequest = request.json
-    character_list.append(jsonRequest)
-    result = character_collection.insert_one(jsonRequest)
-    return jsonify({"inserted_id": str(result.inserted_id)})
-
-#adding bg entry 
-@app.route('/add-background', methods=['GET'])
-def add_background(): 
-    jsonRequest = request.json
-    backgrounds_collection.append(jsonRequest)
-    result = backgrounds_collection.insert_one(jsonRequest)
-    return jsonify({"inserted_id": str(result.inserted_id)})
-
-#adding game entry
-@app.route('/create-game', methods=['GET'])
-def add_game_entry(): 
-    jsonRequest = request.get_json()
-    game_info = jsonRequest
-    result = game_info_collection.insert_one(jsonRequest)
-    return jsonify({"inserted_id": str(result.inserted_id)})
-
-#putting everything into JSON to the openAI API 
-def to_openAI_API(): 
+def to_openAI_API(character_list, background_list, game_info):
     data = {
-        "characterList": character_collection, 
+        "characterList": character_list, 
         "backgroundList": background_list, 
         "game": game_info
     }
-    request = {0: "Thing", 1:"Other thing"} #change later, this is where you hit the openai api 
+    request = {0: "Thing", 1:"Other thing"} # Placeholder, will be modified for real OpenAI call
     result_0 = game_collection.insert_one(request[0])
-    result_1 = game_status_collection.insert_one(resquest[1])
-    return NULL 
+    result_1 = game_status_collection.insert_one(request[1])
+    return None 
+
+# New function to interact with OpenAI and generate the JSONs
+def openai(character_list, background_list, game_info):
+    prompt = f"""
+    You are an AI that generates JSON objects for a visual novel game based on the following data.
+
+    The 'GameStatus' JSON should follow this format:
+    {{
+      "gameID": "ObjectId('gameId1')",
+      "status": "In Progress",
+      "screenID": 5
+    }}
+
+    The 'Game' JSON should follow this format:
+    {{
+      "screenID": 1,
+      "textBoxInfo": {{
+        "Character": "ObjectId('characterId1')",
+        "dialogue": "Welcome to the Enchanted Forest!",
+        "sprite": [1, 2, 3, 4, 5]
+      }},
+      "background": "ObjectId('backgroundId1')",
+      "regularSprites": [1, 2, 3, 4],
+      "nextType": "screenID",
+      "nextScreen": 2,
+      "choices": [
+        {{
+          "choiceID": 1,
+          "choiceText": "Explore the forest",
+          "nextScreen": 2
+        }},
+        {{
+          "choiceID": 2,
+          "choiceText": "Talk to the guide",
+          "nextScreen": 3
+        }}
+      ],
+      "Character": ["ObjectId('characterId1')", "ObjectId('characterId2')"],
+      "Background": ["ObjectId('backgroundId1')"]
+    }}
+
+    Given the following input data, generate a 'GameStatus' and 'Game' JSON:
+    Character List: {json.dumps(character_list, indent=2)}
+    Background List: {json.dumps(background_list, indent=2)}
+    Game Info: {json.dumps(game_info, indent=2)}
+
+    Please provide two JSON objects as output: 'GameStatus' and 'Game'.
+    """
+    print("hello")
+    try:
+        # Call OpenAI API to generate the response
+        response = openai.Completion.create(
+            model="gpt-3.5-turbo",  # Use the desired GPT model
+            prompt=prompt,
+            max_tokens=500,
+            temperature=0.7,
+        )
+        print(response)
+        # Extract the content from the API response
+        ai_response = response.choices[0].message['content']
+        print(ai_response)
+        
+        # Parse the AI-generated JSON
+        ai_json = json.loads(ai_response)
+        game_status_json = ai_json.get("GameStatus")
+        game_json = ai_json.get("Game")
+
+        # Return the generated JSON objects
+        return game_status_json, game_json
+
+    except Exception as e:
+        print(f"Error during API call: {e}")
+        return {"error": str(e)}, {"error": str(e)}
+
+# API endpoint to generate the game status and game JSONs
+@app.route('/generate-game-json', methods=['GET'])
+def generate_game_json():
+    try:
+        # Fetch data from MongoDB
+        character_list, background_list, game_info = fetch_data_from_db()
+
+        # Generate GameStatus and Game JSON from OpenAI
+        game_status_json, game_json = openai(character_list, background_list, game_info)
+
+        # Check if both JSONs were generated successfully
+        if "error" in game_status_json or "error" in game_json:
+            return jsonify({"error": "Failed to generate JSONs"}), 500
+
+        # Insert the generated JSON into MongoDB
+        game_status_collection.insert_one(game_status_json)
+        game_collection.insert_one(game_json)
+
+        return jsonify({
+            "game_status": game_status_json,
+            "game": game_json
+        })
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
-if __name__ == '__main__': 
-    app.run(debug = True)
+# Run the Flask app
+if __name__ == '__main__':
+    app.run(debug=True)

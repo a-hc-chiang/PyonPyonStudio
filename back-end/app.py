@@ -27,6 +27,7 @@ openai.api_key = os.getenv('OPENAI_API_KEY')
 
 # Initialize Flask app
 app = Flask(__name__)
+CORS(app)
 
 # Connect to MongoDB
 main.load_dotenv()
@@ -40,6 +41,7 @@ db = client[db_name]
 # Collections
 backgrounds_collection = db["Backgrounds"]
 character_collection = db["Characters"]
+game_collection = db["Games"]
 game_info_collection = db["VNInformation"]
 game_status_collection = db["GameStatuses"]
 
@@ -391,6 +393,36 @@ def add_game_entry():
     game_info = jsonRequest
     result = game_info_collection.insert_one(jsonRequest)
     return jsonify({"inserted_id": str(result.inserted_id)})
+
+
+# API endpoint to generate the game status and game JSONs
+@app.route('/generate-game-json-from-scratch', methods=['POST'])
+def generate_image_from_scratch():
+    try:
+        # Get the prompt from the request JSON
+        data = request.get_json()
+        game_info = data.game_info
+        background_list = data.backgrounds
+        character_list = data.characters
+
+        game_status_json, game_json = openai_call(character_list, background_list, game_info)
+        if "error" in game_status_json or "error" in game_json:
+            return jsonify({"error": "Failed to generate JSONs"}), 500
+
+        # Insert the generated JSON into MongoDB
+        game_status_collection.insert_one(game_status_json)
+        game_collection.insert_one(game_json)
+
+        return jsonify({
+            "game_status": game_status_json,
+            "game": game_json
+        })
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+
 
 # API endpoint to generate the game status and game JSONs
 @app.route('/generate-game-json', methods=['GET'])

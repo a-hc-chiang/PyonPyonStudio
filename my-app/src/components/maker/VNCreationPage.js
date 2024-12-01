@@ -86,11 +86,46 @@ const VNCreationPage = () => {
     setCurrMenuIdx(idx);
   }
 
-  const handleNextClick = () => {
+  const handleNextClick =  async() => {
     // go to next or submit depending on what currMenuIdx we are on, save the information here
     if (currMenuIdx == 2){
       console.log("generate with: ");
       console.log({"characters": characters, "backgrounds": backgrounds, "gameInfo": gameInfo})
+      const requestData = {
+        characters: characters,
+        backgrounds: backgrounds,
+        gameInfo: gameInfo,
+      };
+      try {
+        // Make a POST request to the /generate-game-json-from-scratch endpoint
+        const response = await fetch('http://127.0.0.1:5000/generate-game-json-from-scratch', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestData),
+        });
+  
+        // Check if the response is successful
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Generated game status and game JSON:", data);
+  
+          console.log(data); // Assuming you have a state to store this data
+  
+        } else {
+          // Handle the error response
+          const errorData = await response.json();
+          console.error("Error generating JSONs:", errorData);
+          alert("Failed to generate game data");
+        }
+  
+      } catch (error) {
+        // Handle the network error or other unexpected errors
+        console.error("Error in API request:", error);
+        alert("An error occurred while generating game data");
+      }
+      
       // do something with characters, backgrounds, gameInfo to API
     } else{
       setCurrMenuIdx((currMenuIdx+1) % 3);

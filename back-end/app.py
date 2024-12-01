@@ -56,7 +56,9 @@ def to_openAI_API(character_list, background_list, game_info):
     return None 
 
 # New function to interact with OpenAI and generate the JSONs
-def openai(character_list, background_list, game_info):
+def openai_call(character_list, background_list, game_info):
+    print("yuck")
+    print(character_list, background_list, game_info)
     prompt = f"""
     You are an AI that generates JSON objects for a visual novel game based on the following data.
 
@@ -96,19 +98,18 @@ def openai(character_list, background_list, game_info):
     }}
 
     Given the following input data, generate a 'GameStatus' and 'Game' JSON:
-    Character List: {json.dumps(character_list, indent=2)}
-    Background List: {json.dumps(background_list, indent=2)}
-    Game Info: {json.dumps(game_info, indent=2)}
+    Character List: {json.dumps(character_list, indent=2, default=str)}
+    Background List: {json.dumps(background_list, indent=2, default=str)}
+    Game Info: {json.dumps(game_info, indent=2, default=str)}
 
     Please provide two JSON objects as output: 'GameStatus' and 'Game'.
     """
-    print("hello")
     try:
         # Call OpenAI API to generate the response
-        response = openai.Completion.create(
-            model="gpt-3.5-turbo",  # Use the desired GPT model
+        response = openai.chat.completions.create(
+            model="gpt-4o",  # Use the desired GPT model
             prompt=prompt,
-            max_tokens=500,
+            max_tokens=10000,
             temperature=0.7,
         )
         print(response)
@@ -131,12 +132,13 @@ def openai(character_list, background_list, game_info):
 # API endpoint to generate the game status and game JSONs
 @app.route('/generate-game-json', methods=['GET'])
 def generate_game_json():
+    
     try:
         # Fetch data from MongoDB
         character_list, background_list, game_info = fetch_data_from_db()
 
         # Generate GameStatus and Game JSON from OpenAI
-        game_status_json, game_json = openai(character_list, background_list, game_info)
+        game_status_json, game_json = openai_call(character_list, background_list, game_info)
 
         # Check if both JSONs were generated successfully
         if "error" in game_status_json or "error" in game_json:

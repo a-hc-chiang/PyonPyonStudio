@@ -236,15 +236,34 @@
   font-weight: bold;
 }
 
+.GameInfoMenu .less{
+  flex: 0.6; /* Input fields take remaining space */
+  padding: 8px;
+  font-size: 14px;
+  width: 70%;
+  box-sizing: border-box;
+  box-shadow: 5px 5px 5px #121212;
+}
+
+.GameInfoMenu .more{
+  box-shadow: 5px 5px 5px #5f5f5f;
+}
+
+.GameInfoMenu .more{
+  height: 200%;
+}
+
+
 .GameInfoMenu select,
 .GameInfoMenu input,
 .GameInfoMenu textarea {
   flex: 1; /* Input fields take remaining space */
   padding: 8px;
   font-size: 14px;
-  width: 100%;
+  width: 50%;
   box-sizing: border-box;
 }
+
 
 .GameInfoMenu .radio-group {
   display: flex;

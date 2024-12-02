@@ -121,7 +121,7 @@ const VNCreationPage = () => {
           console.log("Generated game status and game JSON:", data);
   
           console.log(data); // Assuming you have a state to store this data
-  
+          navigate("/play-game", { state: data.Game });
         } else {
           // Handle the error response
           const errorData = await response.json();

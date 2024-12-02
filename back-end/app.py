@@ -92,15 +92,19 @@ def to_openAI_API(character_list, background_list, game_info):
 
 # New function to interact with OpenAI and generate the JSONs
 def openai_call(character_list, background_list, game_info):
+    char_list = json.dumps(character_list, indent=2, default=str)
+    bg_list = json.dumps(background_list, indent=2, default=str)
+    game_info_str = json.dumps(game_info, indent=2, default=str)
     try:
         # Call OpenAI API to generate the response
         response = openai.chat.completions.create(
-            model="gpt-4o-mini",  # Use the desired GPT model
+              model="gpt-4o",
                 messages=[
         {"role": "system", "content": "You are an AI that generates JSON objects for a visual novel game based on the following data. Please do not generate anything other than the JSON files themself. No additional text."},
         {
             "role": "user",
-            "content": """The 'GameStatus' JSON should follow this format:
+            "content": 
+    """The 'GameStatus' JSON should follow this format:
     {{
       "gameID": "int(range(1,10))",
       "status": "In Progress",
@@ -270,23 +274,25 @@ def openai_call(character_list, background_list, game_info):
     }
   ]
 }
-
-
-
-
     Given the following input data, generate a 'GameStatus' and 'Game' JSON:
-    Character List: {json.dumps(character_list, indent=2, default=str)}
-    Background List: {json.dumps(background_list, indent=2, default=str)}
-    Game Info: {json.dumps(game_info, indent=2, default=str)}
-
-    Please provide two JSON objects as output: 'GameStatus' and 'Game' that can be passed to json.loads"""
+    Character List: """ + char_list + """
+    Background List: """ + bg_list + """
+    Game Info: """ + game_info_str + """
+    IMPORTANT NOTE: Make sure the background id corresponds to the spriteid of type BackgroundImage.
+    IMPORTANT NOTE: MAKE SURE THE LOGICAL FLOW HOLDS. CHOICES SHOULD LEAD TO CORRECT SCREENS AND SCREENS SHOULD LEAD TO CORRECT CHOICES. 
+    USE ONLY our provided input data to please provide two JSON objects as output: 'GameStatus' and 'Game' that can be passed to json.loads. 
+    Make it around 30 screens length.
+    
+    
+    """
         }
     ]
-     
+
         )
         # print(response)
         # Extract the content from the API response
         ai_response = response.choices[0].message.content
+        print(ai_response)
         # print(ai_response)
         # Find the positions of the first and last curly braces
         start_idx = ai_response.find("{")

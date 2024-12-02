@@ -113,6 +113,17 @@
   left: 5%;
 }
 
+.LibraryMenu{
+  background-color: #F3CEED;
+  width: 90%;
+  height: 76%;
+  position: absolute;
+  border-radius: 10px;
+  top: 12%;
+  left: 5%;
+}
+
+
 
 
 .LPLogoContent {
@@ -315,6 +326,16 @@
   align-content: center; /* Vertically centers the grid content */
   justify-items: center; /* Horizontally centers items in each grid cell */
   margin-top: -2%;
+
+}
+
+.LibraryMenu .grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 items per row */
+  gap: 10px; /* Spacing between items */
+  align-content: center; /* Vertically centers the grid content */
+  justify-items: center; /* Horizontally centers items in each grid cell */
+  /* margin-top: -2%; */
 
 }
 

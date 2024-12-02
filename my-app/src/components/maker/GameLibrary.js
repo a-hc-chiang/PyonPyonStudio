@@ -9,11 +9,17 @@ const GameLibrary = () => {
     <div className="MakerPage">
       <TopMenu color="#df79ce" />
       {/* <div className={`LPContent ${fadeIn ? 'fade-in' : ''}`}> */}
-        <div></div>
+        <div className={"MakerPage"}>
+          <div className={"LibraryMenu"}>
+            <p>Library</p>
             <div className="grid-container">
-                
+              <div>asd</div>
+              <div>asd</div>
+              <div>asd</div>
+
             </div>
-        <div></div>
+          </div>
+        </div>
       {/* </div> */}
       <BottomMenu />
     </div>

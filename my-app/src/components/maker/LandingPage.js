@@ -18,6 +18,10 @@ const LandingPage = () => {
     navigate('/generate-vn');
   };
 
+  const handleLibraryClick = () => {
+    navigate('/library'); 
+  };
+
   return (
     <div className="MakerPage">
       <TopMenu color="#df79ce" />
@@ -34,7 +38,10 @@ const LandingPage = () => {
           >
             <p>Generate VN</p>
           </div>
-          <div className="LPPlayGameButton darumadrop-one-regular">
+          <div 
+            className="LPPlayGameButton darumadrop-one-regular"
+            onClick={handleLibraryClick}
+          >
             <p>Play Game</p>
           </div>
         </div>

@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import LandingPage from './components/maker/LandingPage';
 import VNCreationPage from './components/maker/VNCreationPage';
+import GameLibrary from './components/maker/GameLibrary';
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/generate-vn" element={<VNCreationPage/>} />
+        <Route path="/library" element={<GameLibrary/>} />
         {/* Add more routes as needed */}
       </Routes>
     </BrowserRouter>

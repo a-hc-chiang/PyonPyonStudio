@@ -18,6 +18,10 @@ const LandingPage = () => {
     navigate('/generate-vn');
   };
 
+  const handleLibraryClick = () => {
+    navigate('/library');
+  };
+
   const handlePlayGame = () => {
     navigate('/play-game');
   }
@@ -38,7 +42,10 @@ const LandingPage = () => {
           >
             <p>Generate VN</p>
           </div>
-          <div className={"LPPlayGameButton darumadrop-one-regular"} onClick={handlePlayGame}>
+          <div
+            className="LPPlayGameButton darumadrop-one-regular"
+            onClick={handleLibraryClick}
+          >
             <p>Play Game</p>
           </div>
         </div>

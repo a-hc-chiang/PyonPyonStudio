@@ -2,7 +2,6 @@ from pymongo import MongoClient
 from dotenv import main
 import os
 from flask import Flask, request, jsonify, send_file
-import json
 from dotenv import load_dotenv
 import openai
 import re

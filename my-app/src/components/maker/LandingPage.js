@@ -12,15 +12,19 @@ const LandingPage = () => {
   useEffect(() => {
     // Trigger the fade-in effect after component mounts
     setFadeIn(true);
-  }, []); 
+  }, []);
 
   const handleGenerateClick = () => {
     navigate('/generate-vn');
   };
 
   const handleLibraryClick = () => {
-    navigate('/library'); 
+    navigate('/library');
   };
+
+  const handlePlayGame = () => {
+    navigate('/play-game');
+  }
 
   return (
     <div className="MakerPage">
@@ -38,7 +42,7 @@ const LandingPage = () => {
           >
             <p>Generate VN</p>
           </div>
-          <div 
+          <div
             className="LPPlayGameButton darumadrop-one-regular"
             onClick={handleLibraryClick}
           >

@@ -297,8 +297,6 @@ def openai_call(character_list, background_list, game_info):
 
     
         ai_json = json.loads(json_string)
-        
-        print(ai_json)
         # game_status_json = ai_json.get("GameStatus")
         game_status_json = {}
         game_json = ai_json
@@ -422,6 +420,7 @@ def add_game_entry():
     return jsonify({"inserted_id": str(result.inserted_id)})
 
 
+
 # API endpoint to generate the game status and game JSONs
 @app.route('/generate-game-json-from-scratch', methods=['POST'])
 def generate_image_from_scratch():
@@ -440,16 +439,17 @@ def generate_image_from_scratch():
           character_collection.insert_one(char)
 
         all_json = openai_call(character_list, background_list, game_info)
+        # print(all_json)
         game_json = all_json["Game"]
         game_status_json = all_json["GameStatus"]
         # Now, convert the game_json and game_status_json before inserting them
-        game_json = convert_objectid_to_str(game_json)
-        game_status_json = convert_objectid_to_str(game_status_json)
+        # game_json = convert_objectid_to_str(game_json)
+        # game_status_json = convert_objectid_to_str(game_status_json)
 
         # Then proceed with the MongoDB insertions
-        game_status_collection.insert_one(game_status_json)
-        print(game_json)
-        game_collection.insert_one(json.loads(json_util.dumps(game_json)))
+        # game_status_collection.insert_one(game_status_json)
+        # print(game_json)
+        # game_collection.insert_one(json.loads(json_util.dumps(game_json)))
 
         # Return the game_json as needed
         return {"Game": game_json, "GameStatus": game_status_json}

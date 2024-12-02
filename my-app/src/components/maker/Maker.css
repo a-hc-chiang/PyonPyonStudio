@@ -83,6 +83,24 @@
   display: grid;
   grid-template-columns: 15% 40% 35% 10%; /* Defines the proportional layout */
   align-items: center; /* Aligns items vertically */
+  opacity: 0;
+  transform: translateY(20px); /* Start slightly below */
+  transition: opacity 1s ease-in-out, transform 1s ease-in-out; /* Smooth transition */
+}
+
+.fade-in {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.fade-out {
+  opacity: 0;
+}
+
+
+.LPContent.fade-in {
+  opacity: 1;
+  transform: translateY(0); /* Reset position */
 }
 
 .VNCreationMenu{
@@ -329,7 +347,8 @@
   /* border: 2px solid black; */
   /* border-style: dashed; */
   /* border-radius: 20%; */
-  background-color: #F3CEED;
+  /* background-color: #d7acd0; */
+  /* border-radius: 20px; */
 
   transform: translate3d(0, -35%, 0);
   width: 700px;
@@ -397,21 +416,24 @@
 
 .BackgroundMenu .image-container {
   flex: 1;
-  min-width: 60%;
-  max-width: 60%;
-  height: 400px;
+  width: 58%;
+  height: 360px;
   margin-right: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
+  
+  /* background-color: black; */
+  padding: 0px 10px 0px 10px;
 }
 
 .BackgroundMenu .generated-image {
   max-width: 110%;
   max-height: 110%;
   object-fit: contain;
-  transform: translate3d(-3.5%, 5%, 0);
-  border-radius: 3%;
+  margin-right: 20px;
+  /* transform: translate3d(-3.5%, 5%, 0); */
+  border: 5px solid black;
   width: 600px;
 }
 
@@ -426,7 +448,7 @@
 
 .BackgroundMenu textarea {
   width: 110%;
-  height: 200px;
+  height: 250px;
   padding: 10px;
   font-size: x-large;
   border: none;

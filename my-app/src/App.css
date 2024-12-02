@@ -10,6 +10,62 @@
   pointer-events: none;
 }
 
+
+/* Loading Screen Styling */
+.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; /* Stack text and stripes vertically */
+  z-index: 9999;
+}
+
+/* Diagonal Stripes */
+.diagonal-stripes {
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(45deg, #ff7e5f 25%, transparent 25%, transparent 50%, #ff7e5f 50%, #ff7e5f 75%, transparent 75%, transparent);
+  background-size: 50px 50px;
+  animation: moveStripes 1s linear infinite;
+  position: absolute; /* Ensure it doesn't affect the text layout */
+  top: 0;
+  left: 0;
+  z-index: -1; /* Push stripes behind the text */
+}
+
+.loading-text {
+  font-size: 50px;
+}
+
+.diagonal-stripes {
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(45deg, #FFBFF4 25%, transparent 25%, transparent 50%, #FFBFF4 50%, #FFBFF4 75%, transparent 75%, transparent);
+  background-size: 50px 50px; /* Adjust the size of the stripes */
+  animation: moveStripes 1s linear infinite;
+  top: 0;
+  left: 0;
+  z-index: -1; /* Push stripes behind the text */
+}
+
+/* Animate the stripes */
+@keyframes moveStripes {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 100px 0px; /* Shift the stripes to create movement */
+  }
+}
+
+
+
 p{
   margin:0;
 }

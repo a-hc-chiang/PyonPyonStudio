@@ -416,16 +416,14 @@
 
 .BackgroundMenu .image-container {
   flex: 1;
-  min-width: 60%;
-  max-width: 60%;
-  height: 400px;
+  width: 58%;
+  height: 360px;
   margin-right: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 5px solid black;
-  border-radius: 30px;
-  background-color: black;
+  
+  /* background-color: black; */
   padding: 0px 10px 0px 10px;
 }
 
@@ -433,9 +431,9 @@
   max-width: 110%;
   max-height: 110%;
   object-fit: contain;
-  
+  margin-right: 20px;
   /* transform: translate3d(-3.5%, 5%, 0); */
-  border-radius: 3%;
+  border: 5px solid black;
   width: 600px;
 }
 
@@ -450,7 +448,7 @@
 
 .BackgroundMenu textarea {
   width: 110%;
-  height: 200px;
+  height: 250px;
   padding: 10px;
   font-size: x-large;
   border: none;

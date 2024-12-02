@@ -6,12 +6,32 @@ import json
 from dotenv import load_dotenv
 import openai
 import re
+from bson import json_util
+import json
 
 import base64
 import urllib.request
 import time
 from datetime import datetime
 from flask_cors import CORS
+from bson import ObjectId
+
+def convert_objectid_to_str(obj):
+    if isinstance(obj, dict):
+        # If it's a dictionary, recursively process the values
+        return {k: convert_objectid_to_str(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        # If it's a list, recursively process each element
+        return [convert_objectid_to_str(v) for v in obj]
+    elif isinstance(obj, ObjectId):
+        # Convert ObjectId to string
+        return str(obj)
+    else:
+        # If it's not an ObjectId, return the object as is
+        return obj
+
+
+
 
 
 
@@ -284,7 +304,7 @@ def openai_call(character_list, background_list, game_info):
         game_json = ai_json
 
         # Return the generated JSON objects
-        return game_status_json, game_json
+        return game_json
 
     except Exception as e:
         print(f"Error during API call: {e}")
@@ -337,8 +357,8 @@ def make_image_from_prompt(prompt):
     brainrot = "(skibidi:0.1), (gyatt:0.1), (rizz:0.1)"
 
     payload = {
-            "prompt": "anime, masterpiece, landscape, background," + brainrot + "," + prompt,  # extra networks also in prompts
-            "negative_prompt": "lowres, text, error, cropped, worst quality, low quality, jpeg artifacts, ugly, duplicate, morbid, mutilated, out of frame, extra fingers, mutated hands, poorly drawn hands, poorly drawn face, mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra limbs, cloned face, disfigured, gross proportions, malformed limbs, missing arms, missing legs, extra arms, extra legs, fused fingers, too many fingers, long neck, username, watermark, signature",
+            "prompt": "anime, kawaii, masterpiece, background," + brainrot + "," + prompt,  # extra networks also in prompts
+            "negative_prompt": "1girl, 1boy, lowres, text, error, cropped, worst quality, low quality, jpeg artifacts, ugly, duplicate, morbid, mutilated, out of frame, extra fingers, mutated hands, poorly drawn hands, poorly drawn face, mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra limbs, cloned face, disfigured, gross proportions, malformed limbs, missing arms, missing legs, extra arms, extra legs, fused fingers, too many fingers, long neck, username, watermark, signature",
             "steps": 10,
             "width": 820,
             "height": 512,
@@ -408,13 +428,31 @@ def generate_image_from_scratch():
     try:
         # Get the prompt from the request JSON
         data = request.get_json()
+        
         game_info = data["game_info"]
         background_list = data["backgrounds"]
         character_list = data["characters"]
+        
+        game_info_collection.insert_one(game_info)
+        for bg in background_list:
+          backgrounds_collection.insert_one(bg)
+        for char in character_list: 
+          character_collection.insert_one(char)
 
-        game_status_json, game_json = openai_call(character_list, background_list, game_info)
-    
-        return game_json
+        all_json = openai_call(character_list, background_list, game_info)
+        game_json = all_json["Game"]
+        game_status_json = all_json["GameStatus"]
+        # Now, convert the game_json and game_status_json before inserting them
+        game_json = convert_objectid_to_str(game_json)
+        game_status_json = convert_objectid_to_str(game_status_json)
+
+        # Then proceed with the MongoDB insertions
+        game_status_collection.insert_one(game_status_json)
+        print(game_json)
+        game_collection.insert_one(json.loads(json_util.dumps(game_json)))
+
+        # Return the game_json as needed
+        return {"Game": game_json, "GameStatus": game_status_json}
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500

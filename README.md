@@ -1,3 +1,3 @@
 ### Hello!
 
-This is the PyonPyon Studio
+This is the Pyon Pyon Studio

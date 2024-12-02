@@ -6,7 +6,7 @@
 Pyon Pyon Studio is a fun and intuitive platform for generating and playing visual novels. Whether you want to build immersive stories with your favorite characters or simply explore pre-made games, Pyon Pyon Studio has you covered.
 
 ## 🎥 Demo Video  
-<iframe width="768" height="544" src="https://www.youtube.com/embed/Wyynlrl8NmM" title="PYONPYONSTUDIO" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; 🕹️" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/Wyynlrl8NmM/0.jpg)](https://www.youtube.com/watch?v=Wyynlrl8NmM)
 
 ## 🚀 Features  
 - **Visual Novel Generator:**  

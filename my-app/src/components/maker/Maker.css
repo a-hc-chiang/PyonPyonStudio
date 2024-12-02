@@ -124,7 +124,57 @@
 }
 
 
+/* .LibraryGridView{
+  aspect-ratio: 1.8;
+  border-radius: 20px;
+  width: 80%;
+  background-size: cover;
+  background-repeat:   no-repeat;
+  color: white;
+  font-size: 30px;
+  background-position: center center; 
+  -webkit-text-stroke: 2px black; /* width and color */
+  /* background-color: #77b281cd; 
+  background-color: black;
+} */
 
+
+.LibraryGridView {
+  position: relative; /* Needed for the pseudo-element positioning */
+  width: 90%;
+  height: 200px; /* Set your desired height */
+  color: white; /* Ensure text is visible on dark background */
+  font-size: 16px; /* Adjust text size */
+  display: flex; /* Center text */
+  align-items: center; /* Vertically center text */
+  justify-content: center; /* Horizontally center text */
+  text-align: center;
+  overflow: hidden; /* Ensures pseudo-element doesn’t exceed bounds */
+  background-size: cover;
+  background-repeat:   no-repeat;
+  color: white;
+  font-size: 30px;
+  background-position: center center; 
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.LibraryGridView::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.2); /* Dark overlay (50% opacity) */
+  filter: blur(10px); /* Apply blur effect */
+  z-index: 0; /* Ensure it stays behind the text */
+}
+
+.LibraryGridView p{
+  -webkit-text-stroke: 2px black; /* width and color */
+  z-index: 10;
+}
 
 .LPLogoContent {
   background-image: url('Pyon-chan.png'); /* Optional for visibility */
@@ -330,6 +380,8 @@
 }
 
 .LibraryMenu .grid-container {
+  margin-top: 10px;
+  margin-left: 30px;
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* 3 items per row */
   gap: 10px; /* Spacing between items */
